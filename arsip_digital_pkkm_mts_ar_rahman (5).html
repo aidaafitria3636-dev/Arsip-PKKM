@@ -1,0 +1,1991 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ARSIP DIGITAL PKKM MTs AR-RAHMAN</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    colors: {
+                        primary: {
+                            50: '#ecfdf5',
+                            100: '#d1fae5',
+                            500: '#10b981',
+                            600: '#059669',
+                            700: '#047857',
+                            800: '#065f46',
+                            900: '#064e3b',
+                        },
+                        accent: {
+                            500: '#f59e0b',
+                            600: '#d97706'
+                        }
+                    }
+                }
+            }
+        }
+    </script>
+    <!-- Font & Icons -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: 'Plus Jakarta Sans', sans-serif; }
+        ::-webkit-scrollbar { width: 6px; height: 6px; }
+        ::-webkit-scrollbar-track { background: #f1f5f9; }
+        ::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+        ::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+        @media print {
+            body { background: white !important; }
+            .no-print { display: none !important; }
+            .print-only { display: block !important; }
+        }
+    </style>
+</head>
+<body class="bg-slate-100 text-slate-800 antialiased min-h-screen flex flex-col">
+
+    <!-- LOGIN SCREEN -->
+    <div id="loginScreen" class="fixed inset-0 z-50 flex items-center justify-center bg-slate-700/80 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden border border-slate-200 transform transition-all">
+            <div class="bg-gradient-to-b from-emerald-600 to-emerald-700 p-8 text-center text-white relative">
+                <div class="w-20 h-20 bg-white/20 text-white rounded-full flex items-center justify-center mx-auto mb-4 backdrop-blur-md shadow-inner border border-white/30 text-3xl font-extrabold">
+                    <i class="fa-solid fa-graduation-cap"></i>
+                </div>
+                <h1 class="text-2xl font-black tracking-tight uppercase">MTs AR-RAHMAN</h1>
+                <p class="text-xs text-emerald-100 mt-1 font-bold tracking-wide">ARSIP DIGITAL PKKM (CLOUD DATABASE)</p>
+            </div>
+            <form id="loginForm" class="p-8 space-y-5">
+                <div>
+                    <label class="block text-xs font-black uppercase text-slate-700 mb-1.5 tracking-wider">USERNAME / AKUN</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400"><i class="fa-solid fa-user"></i></span>
+                        <input type="text" id="loginUser" required class="w-full pl-10 pr-4 py-3 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-600 focus:outline-none transition font-medium text-slate-700" placeholder="Contoh: admin atau guru">
+                    </div>
+                </div>
+                <div>
+                    <label class="block text-xs font-black uppercase text-slate-700 mb-1.5 tracking-wider">PASSWORD</label>
+                    <div class="relative">
+                        <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center text-slate-400"><i class="fa-solid fa-lock"></i></span>
+                        <input type="password" id="loginPass" required class="w-full pl-10 pr-4 py-3 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-emerald-600 focus:outline-none transition font-medium text-slate-700" placeholder="••••••••">
+                    </div>
+                </div>
+                <button type="submit" class="w-full bg-emerald-700 hover:bg-emerald-800 text-white font-bold py-3.5 rounded-xl shadow-lg shadow-emerald-700/30 transition duration-200 text-sm flex items-center justify-center gap-2">
+                    <i class="fa-solid fa-right-to-bracket text-base"></i> Masuk Sistem Cloud Arsip
+                </button>
+                <div class="bg-emerald-50/80 p-4 rounded-2xl text-xs text-emerald-900 border border-emerald-200/80 space-y-1">
+                    <div class="font-black flex items-center gap-1.5 text-emerald-900"><i class="fa-solid fa-cloud"></i> Terhubung ke Cloud Database:</div>
+                    <div class="font-medium">• Admin: <code class="bg-white px-1.5 py-0.5 rounded border border-emerald-300 font-mono font-bold">admin</code> / <code class="bg-white px-1.5 py-0.5 rounded border border-emerald-300 font-mono font-bold">admin123</code></div>
+                    <div class="font-medium">• Guru: <code class="bg-white px-1.5 py-0.5 rounded border border-emerald-300 font-mono font-bold">guru</code> / <code class="bg-white px-1.5 py-0.5 rounded border border-emerald-300 font-mono font-bold">guru123</code></div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- MAIN APP LAYOUT -->
+    <div id="appLayout" class="hidden flex-1 flex flex-col md:flex-row min-h-screen">
+        
+        <!-- SIDEBAR -->
+        <aside id="sidebar" class="no-print bg-gradient-to-b from-emerald-950 via-emerald-900 to-teal-950 text-white w-72 md:w-72 flex-shrink-0 flex flex-col transition-all duration-300 shadow-2xl z-30 fixed md:static inset-y-0 left-0">
+            <!-- Brand -->
+            <div class="p-5 bg-emerald-950/80 border-b border-emerald-800/40 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-11 h-11 bg-emerald-800 text-white rounded-2xl flex items-center justify-center font-black text-xl shadow-inner border border-emerald-700">
+                        <i class="fa-solid fa-graduation-cap"></i>
+                    </div>
+                    <div>
+                        <h2 class="font-black text-sm tracking-wide leading-tight text-white">MTS AR-RAHMAN</h2>
+                        <p class="text-[11px] text-emerald-300 font-medium">Cloud Arsip PKKM</p>
+                    </div>
+                </div>
+                <button onclick="toggleSidebarMobile()" class="md:hidden text-white hover:text-emerald-200 p-1.5 rounded-xl bg-white/10">
+                    <i class="fa-solid fa-xmark text-xl"></i>
+                </button>
+            </div>
+
+            <!-- Navigation Links -->
+            <nav class="flex-1 overflow-y-auto py-4 px-3 space-y-1.5 text-sm font-semibold">
+                <a href="#dashboard" onclick="switchTab('dashboard')" class="nav-link flex items-center gap-3.5 px-4 py-3 rounded-2xl transition text-emerald-100 hover:bg-emerald-800/60 active-tab">
+                    <i class="fa-solid fa-chart-pie w-5 text-center text-emerald-300"></i> Dashboard
+                </a>
+                <a href="#unsur" onclick="switchTab('unsur')" class="nav-link flex items-center gap-3.5 px-4 py-3 rounded-2xl transition text-emerald-100 hover:bg-emerald-800/60">
+                    <i class="fa-solid fa-list-check w-5 text-center text-emerald-300"></i> Data Unsur PKKM
+                </a>
+                <a href="#indikator" onclick="switchTab('indikator')" class="nav-link flex items-center gap-3.5 px-4 py-3 rounded-2xl transition text-emerald-100 hover:bg-emerald-800/60">
+                    <i class="fa-solid fa-layer-group w-5 text-center text-emerald-300"></i> Indikator Kinerja
+                </a>
+                <a href="#upload" onclick="switchTab('upload')" class="nav-link flex items-center gap-3.5 px-4 py-3 rounded-2xl transition text-emerald-100 hover:bg-emerald-800/60">
+                    <i class="fa-solid fa-cloud-arrow-up w-5 text-center text-emerald-300"></i> Upload Bukti Fisik
+                </a>
+                <a href="#arsip" onclick="switchTab('arsip')" class="nav-link flex items-center gap-3.5 px-4 py-3 rounded-2xl transition text-emerald-100 hover:bg-emerald-800/60">
+                    <i class="fa-solid fa-folder-open w-5 text-center text-emerald-300"></i> Arsip Dokumen
+                </a>
+                <a href="#penilaian" onclick="switchTab('penilaian')" class="nav-link flex items-center gap-3.5 px-4 py-3 rounded-2xl transition text-emerald-100 hover:bg-emerald-800/60">
+                    <i class="fa-solid fa-star w-5 text-center text-emerald-300"></i> Penilaian Kinerja
+                </a>
+                <a href="#rekap" onclick="switchTab('rekap')" class="nav-link flex items-center gap-3.5 px-4 py-3 rounded-2xl transition text-emerald-100 hover:bg-emerald-800/60">
+                    <i class="fa-solid fa-table-cells w-5 text-center text-emerald-300"></i> Rekapitulasi
+                </a>
+                <a href="#laporan" onclick="switchTab('laporan')" class="nav-link flex items-center gap-3.5 px-4 py-3 rounded-2xl transition text-emerald-100 hover:bg-emerald-800/60">
+                    <i class="fa-solid fa-file-pdf w-5 text-center text-emerald-300"></i> Laporan
+                </a>
+                <a href="#users" onclick="switchTab('users')" id="menuUsers" class="nav-link flex items-center gap-3.5 px-4 py-3 rounded-2xl transition text-emerald-100 hover:bg-emerald-800/60">
+                    <i class="fa-solid fa-users-gear w-5 text-center text-emerald-300"></i> Manajemen Pengguna
+                </a>
+                <a href="#pengaturan" onclick="switchTab('pengaturan')" id="menuSettings" class="nav-link flex items-center gap-3.5 px-4 py-3 rounded-2xl transition text-emerald-100 hover:bg-emerald-800/60">
+                    <i class="fa-solid fa-gears w-5 text-center text-emerald-300"></i> Pengaturan
+                </a>
+            </nav>
+
+            <!-- User Info & Netlify Footer -->
+            <div class="p-4 bg-emerald-950/90 border-t border-emerald-900/50 space-y-3">
+                <div class="flex items-center justify-between">
+                    <div>
+                        <p id="userNameDisplay" class="font-bold text-xs text-white">Admin Sistem</p>
+                        <p id="userRoleDisplay" class="text-[11px] text-emerald-300 font-medium">Administrator</p>
+                    </div>
+                    <button onclick="logout()" title="Keluar Sistem" class="text-emerald-300 hover:text-white p-2 rounded-xl hover:bg-white/10 transition">
+                        <i class="fa-solid fa-power-off text-xs"></i>
+                    </button>
+                </div>
+                <div onclick="openShareLinkModal()" class="cursor-pointer bg-teal-800/90 hover:bg-teal-700 px-3 py-2 rounded-xl border border-teal-700/50 flex items-center justify-between text-[11px] text-teal-100 transition shadow">
+                    <div class="flex items-center gap-2 font-bold">
+                        <i class="fa-solid fa-share-nodes text-emerald-300"></i>
+                        <span>Bagikan Link & Data</span>
+                    </div>
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                </div>
+            </div>
+        </aside>
+
+        <!-- CONTENT AREA -->
+        <div class="flex-1 flex flex-col min-w-0 overflow-hidden">
+            <!-- Top Header -->
+            <header class="no-print bg-white shadow-sm border-b border-slate-200 px-6 py-4 flex items-center justify-between z-20">
+                <div class="flex items-center gap-4">
+                    <button onclick="toggleSidebar()" class="text-slate-600 hover:text-primary-700 md:hidden focus:outline-none">
+                        <i class="fa-solid fa-bars text-xl"></i>
+                    </button>
+                    <div>
+                        <h1 id="pageTitle" class="text-xl font-black text-slate-800 tracking-tight">Dashboard Utama</h1>
+                        <p id="pageSubtitle" class="text-xs text-slate-500 font-medium">Ringkasan arsip dokumen dan kelengkapan bukti fisik PKKM</p>
+                    </div>
+                </div>
+                <div class="flex items-center gap-3">
+                    <div class="hidden sm:flex items-center bg-emerald-50 text-emerald-800 px-3.5 py-2 rounded-xl border border-emerald-200 text-xs font-bold gap-2.5 shadow-sm">
+                        <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+                        Madrasah Tsanawiyah Ar-Rahman
+                    </div>
+                    <button onclick="openShareLinkModal()" title="Bagikan Link Akses" class="bg-primary-700 hover:bg-primary-800 text-white px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 transition shadow-md">
+                        <i class="fa-solid fa-share-nodes"></i> <span class="hidden sm:inline">Bagikan Link</span>
+                    </button>
+                    <button onclick="openBackupModal()" title="Backup & Restore Data" class="bg-slate-100 hover:bg-slate-200 text-slate-700 px-3.5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 transition shadow-sm">
+                        <i class="fa-solid fa-database text-primary-700"></i> <span class="hidden sm:inline">Backup</span>
+                    </button>
+                </div>
+            </header>
+
+            <!-- Main Viewport -->
+            <main class="flex-1 overflow-y-auto p-4 md:p-8 bg-slate-100 relative">
+
+                <!-- TAB 1: DASHBOARD -->
+                <section id="tab-dashboard" class="tab-content space-y-6">
+                    <!-- Banner -->
+                    <div class="bg-gradient-to-r from-primary-900 via-primary-800 to-emerald-700 rounded-3xl p-8 text-white shadow-xl flex flex-col lg:flex-row justify-between items-center gap-6 relative overflow-hidden">
+                        <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-white/5 rounded-full blur-2xl pointer-events-none"></div>
+                        <div class="space-y-3 text-center lg:text-left z-10">
+                            <span class="bg-white/20 text-emerald-100 text-xs px-3.5 py-1.5 rounded-full font-bold backdrop-blur-md uppercase tracking-wider">Penilaian Kinerja Kepala Madrasah (PKKM)</span>
+                            <h2 class="text-3xl font-black tracking-tight">ARSIP DIGITAL PKKM MTs AR-RAHMAN</h2>
+                            <p class="text-emerald-100 text-sm max-w-2xl leading-relaxed font-medium">Sistem penyimpanan cerdas real-time untuk pengelompokan dan penilaian bukti fisik kepala madrasah.</p>
+                        </div>
+                        <div class="bg-white/10 backdrop-blur-xl p-5 rounded-2xl border border-white/20 text-center flex flex-col items-center justify-center min-w-[180px] shadow-2xl z-10">
+                            <span class="text-xs uppercase tracking-wider text-emerald-200 font-bold">Kelengkapan Arsip</span>
+                            <span id="dashPercent" class="text-4xl font-black text-amber-400 mt-1">0%</span>
+                            <span id="dashStatusText" class="text-xs text-emerald-100 mt-1 font-semibold">0 dari 0 Indikator</span>
+                        </div>
+                    </div>
+
+                    <!-- Summary Cards matching reference style -->
+                    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+                        <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200/80 flex items-center gap-4 hover:shadow-md transition">
+                            <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center text-2xl font-bold flex-shrink-0 shadow-sm border border-emerald-100">
+                                <i class="fa-solid fa-folder-open"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-400 font-bold uppercase tracking-wider">Total Dokumen</p>
+                                <h3 id="statTotalDoc" class="text-2xl font-black text-slate-800 mt-0.5">0</h3>
+                                <p class="text-[11px] text-emerald-600 font-semibold mt-0.5">Berkas tersimpan</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200/80 flex items-center gap-4 hover:shadow-md transition">
+                            <div class="w-14 h-14 rounded-2xl bg-emerald-50 text-emerald-700 flex items-center justify-center text-2xl font-bold flex-shrink-0 shadow-sm border border-emerald-100">
+                                <i class="fa-solid fa-circle-check"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-400 font-bold uppercase tracking-wider">Dokumen Lengkap</p>
+                                <h3 id="statIndComplete" class="text-2xl font-black text-slate-800 mt-0.5">0</h3>
+                                <p id="statIndCompleteSub" class="text-[11px] text-emerald-600 font-semibold mt-0.5">Indikator terisi</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200/80 flex items-center gap-4 hover:shadow-md transition">
+                            <div class="w-14 h-14 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center text-2xl font-bold flex-shrink-0 shadow-sm border border-amber-100">
+                                <i class="fa-solid fa-triangle-exclamation"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-400 font-bold uppercase tracking-wider">Belum Lengkap</p>
+                                <h3 id="statIndIncomplete" class="text-2xl font-black text-slate-800 mt-0.5">0</h3>
+                                <p class="text-[11px] text-amber-600 font-semibold mt-0.5">Perlu dilengkapi</p>
+                            </div>
+                        </div>
+                        <div class="bg-white p-6 rounded-3xl shadow-sm border border-slate-200/80 flex items-center gap-4 hover:shadow-md transition">
+                            <div class="w-14 h-14 rounded-2xl bg-purple-50 text-purple-600 flex items-center justify-center text-2xl font-bold flex-shrink-0 shadow-sm border border-purple-100">
+                                <i class="fa-solid fa-list-check"></i>
+                            </div>
+                            <div>
+                                <p class="text-xs text-slate-400 font-bold uppercase tracking-wider">Total Indikator</p>
+                                <h3 id="statTotalInd" class="text-2xl font-black text-slate-800 mt-0.5">0</h3>
+                                <p class="text-[11px] text-purple-600 font-semibold mt-0.5">Kinerja PKKM</p>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Additional Metrics & Quick Search -->
+                    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                        <div class="bg-white p-7 rounded-3xl shadow-sm border border-slate-200/80 lg:col-span-2 flex flex-col justify-between">
+                            <div>
+                                <h3 class="text-base font-black text-slate-800 mb-6 flex items-center gap-2.5">
+                                    <i class="fa-solid fa-chart-column text-primary-600"></i> Kelengkapan Berdasarkan Unsur (C. Pengembangan Kewirausahaan)
+                                </h3>
+                                <div id="unsurProgressContainer" class="space-y-5">
+                                    <!-- Dynamic Unsur Progress Bars -->
+                                </div>
+                            </div>
+                            <div class="mt-8 pt-5 border-t border-slate-100 flex flex-wrap gap-4 justify-between text-xs font-semibold text-slate-600">
+                                <div>Total Unsur Utama: <strong class="text-slate-800">5 Unsur</strong></div>
+                                <div>Total Indikator: <strong id="summaryTotalIndCount" class="text-slate-800">0</strong></div>
+                                <div>Rata-rata Nilai Asesor: <strong id="summaryAvgScore" class="text-slate-800">0.0 / 4.0</strong></div>
+                            </div>
+                        </div>
+
+                        <!-- Quick Search Box -->
+                        <div class="bg-white p-7 rounded-3xl shadow-sm border border-slate-200/80 flex flex-col justify-between">
+                            <div>
+                                <h3 class="text-base font-black text-slate-800 mb-2 flex items-center gap-2.5">
+                                    <i class="fa-solid fa-magnifying-glass text-primary-600"></i> Pencarian Dokumen Cepat
+                                </h3>
+                                <p class="text-xs text-slate-500 mb-5 leading-relaxed">Cari dokumen bukti fisik instan berdasarkan judul file, nama penanggung jawab, atau jenis bukti.</p>
+                                <div class="space-y-3.5">
+                                    <input type="text" id="quickSearchInput" oninput="runQuickSearch(this.value)" placeholder="Ketik kata kunci pencarian..." class="w-full px-4 py-3 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-primary-600 focus:outline-none transition">
+                                    <div id="quickSearchResults" class="max-h-56 overflow-y-auto space-y-2 text-xs divide-y divide-slate-100 pr-1">
+                                        <p class="text-slate-400 text-center py-6">Ketik kata kunci untuk mulai mencari...</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <button onclick="switchTab('arsip')" class="mt-6 w-full bg-slate-100 hover:bg-slate-200 text-slate-700 py-3 rounded-xl text-xs font-bold transition flex items-center justify-center gap-2">
+                                Buka Pusat Arsip Lengkap <i class="fa-solid fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 2: DATA UNSUR PKKM -->
+                <section id="tab-unsur" class="tab-content hidden space-y-6">
+                    <div class="bg-white p-7 rounded-3xl shadow-sm border border-slate-200/80 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div>
+                            <h2 class="text-lg font-black text-slate-800">Unsur Tugas Utama PKKM</h2>
+                            <p class="text-xs text-slate-500 mt-0.5">Daftar unsur tugas utama Penilaian Kinerja Kepala Madrasah khusus Pengembangan Kewirausahaan.</p>
+                        </div>
+                        <button onclick="openUnsurModal()" class="bg-primary-700 hover:bg-primary-800 text-white px-5 py-3 rounded-xl text-xs font-bold flex items-center gap-2 shadow-lg shadow-emerald-700/20 transition">
+                            <i class="fa-solid fa-plus text-sm"></i> Tambah Unsur Baru
+                        </button>
+                    </div>
+
+                    <div id="unsurCardList" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                        <!-- Dynamic Unsur Cards -->
+                    </div>
+                </section>
+
+                <!-- TAB 3: INDIKATOR KINERJA -->
+                <section id="tab-indikator" class="tab-content hidden space-y-6">
+                    <div class="bg-white p-7 rounded-3xl shadow-sm border border-slate-200/80 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div>
+                            <h2 class="text-lg font-black text-slate-800">Indikator Kinerja & Bukti Diharapkan</h2>
+                            <p class="text-xs text-slate-500 mt-0.5">Kelola rincian indikator kinerja beserta daftar bukti fisik yang harus diarsipkan.</p>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
+                            <select id="filterUnsurIndikator" onchange="renderIndikatorTable()" class="px-4 py-2.5 text-xs font-semibold border border-slate-300 rounded-xl focus:ring-2 focus:ring-primary-600 focus:outline-none">
+                                <option value="">Semua Unsur Tugas Utama</option>
+                            </select>
+                            <button onclick="openIndikatorModal()" class="bg-primary-700 hover:bg-primary-800 text-white px-5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 shadow transition flex-shrink-0">
+                                <i class="fa-solid fa-plus"></i> Tambah Indikator
+                            </button>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-3xl shadow-sm border border-slate-200/80 overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse text-xs">
+                                <thead>
+                                    <tr class="bg-emerald-50/70 text-primary-900 border-b border-emerald-100 uppercase font-bold tracking-wider">
+                                        <th class="p-4">Unsur / Indikator</th>
+                                        <th class="p-4">Nama Indikator Kinerja</th>
+                                        <th class="p-4">Bukti Fisik yang Diharapkan</th>
+                                        <th class="p-4 text-center">Status Dokumen</th>
+                                        <th class="p-4 text-center">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="indikatorTableBody" class="divide-y divide-slate-100">
+                                    <!-- Dynamic rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 4: UPLOAD BUKTI FISIK (Multi-file Support) -->
+                <section id="tab-upload" class="tab-content hidden space-y-6">
+                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200/80 max-w-4xl mx-auto">
+                        <div class="border-b border-slate-100 pb-5 mb-6">
+                            <h2 class="text-lg font-black text-slate-800 flex items-center gap-2.5">
+                                <i class="fa-solid fa-cloud-arrow-up text-primary-600 text-xl"></i> Form Unggah Bukti Fisik PKKM (Multi-File)
+                            </h2>
+                            <p class="text-xs text-slate-500 mt-1">Satu indikator dapat menampung banyak file bukti fisik tanpa batasan. Unggah file dokumen atau foto dokumentasi pendukung.</p>
+                        </div>
+
+                        <form id="uploadForm" onsubmit="handleUploadSubmit(event)" class="space-y-6">
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-xs font-bold uppercase text-slate-700 mb-1.5 tracking-wider">Unsur Tugas Utama</label>
+                                    <select id="upUnsur" required onchange="populateIndikatorDropdown(this.value)" class="w-full px-4 py-3 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-primary-600 focus:outline-none transition">
+                                        <option value="">-- Pilih Unsur Tugas Utama --</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold uppercase text-slate-700 mb-1.5 tracking-wider">Indikator Kinerja</label>
+                                    <select id="upIndikator" required onchange="updateDefaultBuktiList(this.value)" class="w-full px-4 py-3 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-primary-600 focus:outline-none transition">
+                                        <option value="">-- Pilih Indikator Kinerja Dulu --</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                                <div>
+                                    <label class="block text-xs font-bold uppercase text-slate-700 mb-1.5 tracking-wider">Judul / Nama Dokumen Bukti Fisik</label>
+                                    <input type="text" id="upTitle" required placeholder="Contoh: Dokumen Program Pengembangan Madrasah 2026" class="w-full px-4 py-3 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-primary-600 focus:outline-none transition">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold uppercase text-slate-700 mb-1.5 tracking-wider">Jenis Bukti Fisik</label>
+                                    <select id="upJenis" required class="w-full px-4 py-3 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-primary-600 focus:outline-none transition">
+                                        <option value="">-- Pilih Jenis Bukti --</option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                                <div>
+                                    <label class="block text-xs font-bold uppercase text-slate-700 mb-1.5 tracking-wider">Tanggal Dokumen</label>
+                                    <input type="date" id="upDate" required class="w-full px-4 py-3 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-primary-600 focus:outline-none transition">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold uppercase text-slate-700 mb-1.5 tracking-wider">Tahun Pelaksanaan</label>
+                                    <select id="upYear" required class="w-full px-4 py-3 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-primary-600 focus:outline-none transition">
+                                        <option value="2026">2026</option>
+                                        <option value="2025">2025</option>
+                                        <option value="2024">2024</option>
+                                    </select>
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold uppercase text-slate-700 mb-1.5 tracking-wider">Penanggung Jawab (PIC)</label>
+                                    <input type="text" id="upPic" required placeholder="Nama / Tim Penyusun" class="w-full px-4 py-3 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-primary-600 focus:outline-none transition">
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-700 mb-1.5 tracking-wider">Deskripsi atau Keterangan Dokumen</label>
+                                <textarea id="upDesc" rows="3" placeholder="Tuliskan keterangan rinci mengenai isi dokumen bukti fisik..." class="w-full px-4 py-3 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-primary-600 focus:outline-none transition"></textarea>
+                            </div>
+
+                            <div class="grid grid-cols-1 md:grid-cols-2 gap-6 p-6 bg-emerald-50/70 rounded-2xl border border-emerald-200">
+                                <div>
+                                    <label class="block text-xs font-bold uppercase text-primary-900 mb-2">Unggah File Dokumen (PDF, Word, Excel, PPT, JPG, PNG)</label>
+                                    <input type="file" id="upFile" required accept=".pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.jpg,.jpeg,.png" class="w-full text-xs text-slate-600 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-primary-700 file:text-white hover:file:bg-primary-800 cursor-pointer">
+                                </div>
+                                <div>
+                                    <label class="block text-xs font-bold uppercase text-primary-900 mb-2">Unggah Foto Dokumentasi (Opsional)</label>
+                                    <input type="file" id="upPhoto" accept=".jpg,.jpeg,.png" class="w-full text-xs text-slate-600 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-slate-700 file:text-white hover:file:bg-slate-800 cursor-pointer">
+                                </div>
+                            </div>
+
+                            <div class="flex justify-end gap-3 pt-4 border-t border-slate-100">
+                                <button type="reset" class="px-6 py-3 rounded-xl border border-slate-300 text-xs font-bold text-slate-700 hover:bg-slate-50 transition">Reset Form</button>
+                                <button type="submit" class="px-7 py-3 rounded-xl bg-primary-700 hover:bg-primary-800 text-white text-xs font-bold shadow-lg shadow-emerald-700/20 transition flex items-center gap-2">
+                                    <i class="fa-solid fa-cloud-arrow-up text-sm"></i> Simpan & Unggah Dokumen Arsip
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </section>
+
+                <!-- TAB 5: ARSIP DOKUMEN -->
+                <section id="tab-arsip" class="tab-content hidden space-y-6">
+                    <div class="bg-white p-7 rounded-3xl shadow-sm border border-slate-200/80 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div>
+                            <h2 class="text-lg font-black text-slate-800">Pusat Arsip Dokumen Bukti Fisik</h2>
+                            <p class="text-xs text-slate-500 mt-0.5">Daftar seluruh dokumen bukti fisik PKKM yang tersimpan permanen dalam sistem.</p>
+                        </div>
+                        <div class="flex flex-wrap items-center gap-3 w-full md:w-auto">
+                            <input type="text" id="archiveSearch" oninput="renderArsipTable()" placeholder="Cari judul, PIC, jenis..." class="px-4 py-2.5 text-xs font-semibold border border-slate-300 rounded-xl focus:ring-2 focus:ring-primary-600 focus:outline-none">
+                            <select id="archiveFilterUnsur" onchange="renderArsipTable()" class="px-4 py-2.5 text-xs font-semibold border border-slate-300 rounded-xl focus:ring-2 focus:ring-primary-600 focus:outline-none">
+                                <option value="">Semua Unsur</option>
+                            </select>
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-3xl shadow-sm border border-slate-200/80 overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse text-xs">
+                                <thead>
+                                    <tr class="bg-emerald-50/70 text-primary-900 border-b border-emerald-100 uppercase font-bold tracking-wider">
+                                        <th class="p-4">Judul & Keterangan Dokumen</th>
+                                        <th class="p-4">Unsur & Indikator</th>
+                                        <th class="p-4">Jenis & Berkas File</th>
+                                        <th class="p-4">Penanggung Jawab</th>
+                                        <th class="p-4">Tanggal / Tahun</th>
+                                        <th class="p-4 text-center">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="archiveTableBody" class="divide-y divide-slate-100">
+                                    <!-- Dynamic rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 6: PENILAIAN HASIL KINERJA -->
+                <section id="tab-penilaian" class="tab-content hidden space-y-6">
+                    <div class="bg-white p-7 rounded-3xl shadow-sm border border-slate-200/80 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div>
+                            <h2 class="text-lg font-black text-slate-800">Penilaian Hasil Kinerja Kepala Madrasah</h2>
+                            <p class="text-xs text-slate-500 mt-0.5">Berikan penilaian (Nilai 1 s.d. 4) beserta catatan dan alasan penilai untuk setiap indikator.</p>
+                        </div>
+                        <div class="bg-emerald-50 px-4 py-2.5 rounded-xl border border-emerald-200 text-xs text-primary-900 font-bold flex items-center gap-2">
+                            <i class="fa-solid fa-award text-primary-600"></i> Skala Penilaian: 1 (Kurang) s.d. 4 (Sangat Baik)
+                        </div>
+                    </div>
+
+                    <div class="bg-white rounded-3xl shadow-sm border border-slate-200/80 overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse text-xs">
+                                <thead>
+                                    <tr class="bg-emerald-50/70 text-primary-900 border-b border-emerald-100 uppercase font-bold tracking-wider">
+                                        <th class="p-4">Indikator Kinerja</th>
+                                        <th class="p-4 text-center">Jumlah Berkas</th>
+                                        <th class="p-4 text-center">Nilai (1 - 4)</th>
+                                        <th class="p-4">Catatan & Alasan Penilai</th>
+                                        <th class="p-4 text-center">Simpan Nilai</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="penilaianTableBody" class="divide-y divide-slate-100">
+                                    <!-- Dynamic rows -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 7: REKAPITULASI -->
+                <section id="tab-rekap" class="tab-content hidden space-y-6">
+                    <div class="bg-white p-7 rounded-3xl shadow-sm border border-slate-200/80 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div>
+                            <h2 class="text-lg font-black text-slate-800">Rekapitulasi PKKM MTs Ar-Rahman</h2>
+                            <p class="text-xs text-slate-500 mt-0.5">Analisis statistik komprehensif kelengkapan berkas dan sebaran nilai kinerja penilai.</p>
+                        </div>
+                        <button onclick="switchTab('laporan')" class="bg-primary-700 hover:bg-primary-800 text-white px-5 py-2.5 rounded-xl text-xs font-bold flex items-center gap-2 shadow transition">
+                            <i class="fa-solid fa-file-pdf"></i> Buka Menu Laporan Resmi
+                        </button>
+                    </div>
+
+                    <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+                        <div class="bg-white p-7 rounded-3xl shadow-sm border border-slate-200/80 space-y-5">
+                            <h3 class="font-black text-slate-800 border-b border-slate-100 pb-3 flex items-center gap-2.5 text-sm">
+                                <i class="fa-solid fa-chart-pie text-primary-600"></i> Rekapitulasi Berdasarkan Unsur Tugas
+                            </h3>
+                            <div id="rekapUnsurList" class="space-y-3.5 text-xs">
+                                <!-- Dynamic Unsur Rekap -->
+                            </div>
+                        </div>
+
+                        <div class="bg-white p-7 rounded-3xl shadow-sm border border-slate-200/80 space-y-5">
+                            <h3 class="font-black text-slate-800 border-b border-slate-100 pb-3 flex items-center gap-2.5 text-sm">
+                                <i class="fa-solid fa-award text-primary-600"></i> Distribusi Nilai Kinerja (1 - 4)
+                            </h3>
+                            <div id="rekapNilaiList" class="space-y-3.5 text-xs">
+                                <!-- Dynamic Nilai Rekap -->
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 8: LAPORAN -->
+                <section id="tab-laporan" class="tab-content hidden space-y-6">
+                    <div class="no-print bg-white p-7 rounded-3xl shadow-sm border border-slate-200/80 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div>
+                            <h2 class="text-lg font-black text-slate-800">Laporan Resmi Administrasi PKKM</h2>
+                            <p class="text-xs text-slate-500 mt-0.5">Cetak atau ekspor laporan lengkap persiapan Penilaian Kinerja Kepala Madrasah MTs Ar-Rahman.</p>
+                        </div>
+                        <button onclick="window.print()" class="bg-primary-700 hover:bg-primary-800 text-white px-5 py-3 rounded-xl text-xs font-bold flex items-center gap-2 shadow-lg shadow-emerald-700/20 transition">
+                            <i class="fa-solid fa-print"></i> Cetak Dokumen / Simpan PDF
+                        </button>
+                    </div>
+
+                    <!-- Printable Document Container -->
+                    <div id="printableReport" class="bg-white p-10 rounded-3xl shadow-sm border border-slate-200 space-y-8 max-w-4xl mx-auto text-slate-800 text-sm">
+                        <!-- Header Surat -->
+                        <div class="border-b-2 border-primary-900 pb-6 flex items-center justify-between">
+                            <div class="flex items-center gap-4">
+                                <div class="w-16 h-16 bg-primary-800 text-white rounded-2xl flex items-center justify-center font-bold text-2xl shadow-md">
+                                    <i class="fa-solid fa-graduation-cap"></i>
+                                </div>
+                                <div>
+                                    <h3 class="text-lg font-black tracking-tight uppercase text-primary-900">MADRASAH TSANAWIYAH AR-RAHMAN</h3>
+                                    <p class="text-xs text-slate-600 font-semibold">Laporan Resmi Kelengkapan Bukti Fisik PKKM - Unsur Pengembangan Kewirausahaan</p>
+                                    <p class="text-[11px] text-slate-400 mt-0.5">Tahun Penilaian: 2026 • Status: Terverifikasi</p>
+                                </div>
+                            </div>
+                            <div class="text-right hidden sm:block">
+                                <span class="bg-emerald-100 text-emerald-800 text-xs px-3.5 py-1.5 rounded-full font-bold">DOKUMEN RESMI</span>
+                            </div>
+                        </div>
+
+                        <!-- Info Ringkas -->
+                        <div class="grid grid-cols-2 md:grid-cols-4 gap-4 bg-emerald-50/70 p-5 rounded-2xl border border-emerald-200 text-xs">
+                            <div>
+                                <p class="text-slate-500 uppercase font-bold tracking-wider">Total Dokumen</p>
+                                <p id="repTotalDoc" class="text-xl font-black text-slate-800 mt-0.5">0</p>
+                            </div>
+                            <div>
+                                <p class="text-slate-500 uppercase font-bold tracking-wider">Indikator Terisi</p>
+                                <p id="repIndFilled" class="text-xl font-black text-slate-800 mt-0.5">0 / 0</p>
+                            </div>
+                            <div>
+                                <p class="text-slate-500 uppercase font-bold tracking-wider">Persentase</p>
+                                <p id="repPercent" class="text-xl font-black text-primary-700 mt-0.5">0%</p>
+                            </div>
+                            <div>
+                                <p class="text-slate-500 uppercase font-bold tracking-wider">Rata-rata Nilai</p>
+                                <p id="repAvgScore" class="text-xl font-black text-primary-700 mt-0.5">0.0</p>
+                            </div>
+                        </div>
+
+                        <!-- Table Unsur & Indikator Laporan -->
+                        <div class="space-y-4">
+                            <h4 class="font-bold text-primary-900 border-b pb-2 text-xs uppercase tracking-wider">Rekapitulasi Indikator Kinerja & Bukti Fisik</h4>
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left border-collapse text-xs">
+                                    <thead>
+                                        <tr class="bg-slate-100 border-b border-slate-300 font-bold text-slate-700">
+                                            <th class="p-3">No</th>
+                                            <th class="p-3">Unsur & Indikator Kinerja</th>
+                                            <th class="p-3 text-center">Jumlah Berkas</th>
+                                            <th class="p-3 text-center">Nilai</th>
+                                            <th class="p-3 text-center">Status</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody id="reportTableBody" class="divide-y divide-slate-200">
+                                        <!-- Dynamic report rows -->
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+
+                        <!-- Tanda Tangan -->
+                        <div class="pt-10 grid grid-cols-2 gap-8 text-center text-xs">
+                            <div>
+                                <p class="mb-20 font-medium">Tim Penilai / Asesor PKKM,</p>
+                                <p class="font-black underline">Dr. H. M. Zainuddin, M.Pd</p>
+                                <p class="text-slate-500 mt-0.5">NIP. 196803121994031005</p>
+                            </div>
+                            <div>
+                                <p class="font-medium">Kepala MTs Ar-Rahman,</p>
+                                <p class="font-black underline mt-20">H. Ahmad Fauzi, S.Ag., M.Pd.I</p>
+                                <p class="text-slate-500 mt-0.5">NIP. 197205121998031002</p>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 9: MANAJEMEN PENGGUNA -->
+                <section id="tab-users" class="tab-content hidden space-y-6">
+                    <div class="bg-white p-7 rounded-3xl shadow-sm border border-slate-200/80 flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+                        <div>
+                            <h2 class="text-lg font-black text-slate-800">Manajemen Pengguna Aplikasi</h2>
+                            <p class="text-xs text-slate-500 mt-0.5">Kelola akun administrator dan guru/penilai yang memiliki hak akses sistem.</p>
+                        </div>
+                        <button onclick="openUserModal()" class="bg-primary-700 hover:bg-primary-800 text-white px-5 py-3 rounded-xl text-xs font-bold flex items-center gap-2 shadow transition">
+                            <i class="fa-solid fa-user-plus"></i> Tambah Pengguna Baru
+                        </button>
+                    </div>
+
+                    <div class="bg-white rounded-3xl shadow-sm border border-slate-200/80 overflow-hidden">
+                        <div class="overflow-x-auto">
+                            <table class="w-full text-left border-collapse text-xs">
+                                <thead>
+                                    <tr class="bg-emerald-50/70 text-primary-900 border-b border-emerald-100 uppercase font-bold tracking-wider">
+                                        <th class="p-4">Nama Lengkap</th>
+                                        <th class="p-4">Username</th>
+                                        <th class="p-4">Peran (Role)</th>
+                                        <th class="p-4">Status Akun</th>
+                                        <th class="p-4 text-center">Aksi</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="userTableBody" class="divide-y divide-slate-100">
+                                    <!-- Dynamic Users -->
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- TAB 10: PENGATURAN -->
+                <section id="tab-pengaturan" class="tab-content hidden space-y-6">
+                    <div class="bg-white p-8 rounded-3xl shadow-sm border border-slate-200/80 max-w-2xl mx-auto space-y-6">
+                        <div class="border-b border-slate-100 pb-4">
+                            <h2 class="text-lg font-black text-slate-800 flex items-center gap-2.5">
+                                <i class="fa-solid fa-gears text-primary-600 text-xl"></i> Pengaturan Master & Konfigurasi
+                            </h2>
+                            <p class="text-xs text-slate-500 mt-1">Kelola jenis bukti fisik standar dan data konfigurasi madrasah.</p>
+                        </div>
+
+                        <div class="space-y-5">
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-700 mb-2">Tambah Jenis Bukti Fisik Baru</label>
+                                <div class="flex gap-3">
+                                    <input type="text" id="newJenisInput" placeholder="Contoh: Dokumen SK Pembagian Tugas..." class="flex-1 px-4 py-3 text-sm border border-slate-300 rounded-xl focus:ring-2 focus:ring-primary-600 focus:outline-none transition">
+                                    <button onclick="addNewJenisBukti()" class="bg-primary-700 hover:bg-primary-800 text-white px-5 py-3 rounded-xl text-xs font-bold transition shadow">Tambah</button>
+                                </div>
+                            </div>
+
+                            <div>
+                                <label class="block text-xs font-bold uppercase text-slate-700 mb-2">Daftar Jenis Bukti Fisik Tersedia</label>
+                                <div id="jenisBuktiListContainer" class="flex flex-wrap gap-2.5 p-4 bg-slate-50 rounded-2xl border border-slate-200 min-h-[70px]">
+                                    <!-- Dynamic badges -->
+                                </div>
+                            </div>
+
+                            <div class="pt-6 border-t border-slate-100 space-y-3">
+                                <h3 class="text-sm font-black text-slate-800">Reset Pabrik Sistem (Factory Reset)</h3>
+                                <p class="text-xs text-slate-500 leading-relaxed">Mengembalikan seluruh unsur tugas utama, indikator, dokumen arsip, dan penilaian ke pengaturan awal bawaan aplikasi.</p>
+                                <button onclick="resetFactoryData()" class="bg-red-600 hover:bg-red-700 text-white px-5 py-3 rounded-xl text-xs font-bold transition flex items-center gap-2 shadow-lg shadow-red-600/20">
+                                    <i class="fa-solid fa-triangle-exclamation"></i> Reset Seluruh Data Aplikasi
+                                </button>
+                            </div>
+                        </div>
+                    </div>
+                </section>
+
+            </main>
+        </div>
+    </div>
+
+    <!-- MODALS & DIALOGS -->
+
+    <!-- PREVIEW / DETAIL MODAL -->
+    <div id="previewModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-2xl overflow-hidden border border-slate-200 transform transition-all">
+            <div class="bg-primary-800 p-5 text-white flex items-center justify-between">
+                <h3 id="previewModalTitle" class="font-black text-sm tracking-wide">Detail Dokumen Bukti Fisik</h3>
+                <button onclick="closeModal('previewModal')" class="text-white hover:text-emerald-200"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <div id="previewModalBody" class="p-6 space-y-4 text-xs max-h-[70vh] overflow-y-auto">
+                <!-- Content populated dynamically -->
+            </div>
+            <div class="bg-slate-50 px-6 py-4 border-t flex justify-between items-center">
+                <button id="modalDownloadBtn" class="px-4 py-2 bg-emerald-700 hover:bg-emerald-800 text-white rounded-xl text-xs font-bold transition flex items-center gap-2">
+                    <i class="fa-solid fa-download"></i> Unduh File Asli
+                </button>
+                <button onclick="closeModal('previewModal')" class="px-5 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl text-xs font-bold transition">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- UNSUR MODAL -->
+    <div id="unsurModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden border border-slate-200">
+            <div class="bg-primary-800 p-5 text-white flex items-center justify-between">
+                <h3 id="unsurModalTitle" class="font-black text-sm tracking-wide">Tambah Unsur Tugas Utama</h3>
+                <button onclick="closeModal('unsurModal')" class="text-white hover:text-emerald-200"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <form id="unsurForm" onsubmit="saveUnsur(event)" class="p-6 space-y-4 text-xs">
+                <input type="hidden" id="unsurEditId">
+                <div>
+                    <label class="block font-bold uppercase text-slate-700 mb-1.5">Kode Unsur (Contoh: 3.1)</label>
+                    <input type="text" id="unsurCode" required placeholder="3.1" class="w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-primary-600 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block font-bold uppercase text-slate-700 mb-1.5">Judul / Nama Unsur Tugas Utama</label>
+                    <textarea id="unsurTitle" rows="3" required placeholder="Menciptakan inovasi yang bermanfaat..." class="w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-primary-600 focus:outline-none"></textarea>
+                </div>
+                <div class="flex justify-end gap-2 pt-3">
+                    <button type="button" onclick="closeModal('unsurModal')" class="px-4 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl font-bold">Batal</button>
+                    <button type="submit" class="px-5 py-2.5 bg-primary-700 hover:bg-primary-800 text-white rounded-xl font-bold">Simpan Unsur</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- INDIKATOR MODAL -->
+    <div id="indikatorModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-lg overflow-hidden border border-slate-200">
+            <div class="bg-primary-800 p-5 text-white flex items-center justify-between">
+                <h3 id="indikatorModalTitle" class="font-black text-sm tracking-wide">Tambah Indikator Kinerja</h3>
+                <button onclick="closeModal('indikatorModal')" class="text-white hover:text-emerald-200"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <form id="indikatorForm" onsubmit="saveIndikator(event)" class="p-6 space-y-4 text-xs">
+                <input type="hidden" id="indEditId">
+                <div>
+                    <label class="block font-bold uppercase text-slate-700 mb-1.5">Pilih Unsur Tugas Utama</label>
+                    <select id="indUnsurSelect" required class="w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-primary-600 focus:outline-none">
+                        <option value="">-- Pilih Unsur --</option>
+                    </select>
+                </div>
+                <div class="grid grid-cols-3 gap-3">
+                    <div>
+                        <label class="block font-bold uppercase text-slate-700 mb-1.5">Nomor</label>
+                        <input type="text" id="indNo" required placeholder="1" class="w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-primary-600 focus:outline-none">
+                    </div>
+                    <div class="col-span-2">
+                        <label class="block font-bold uppercase text-slate-700 mb-1.5">Nama Indikator Kinerja</label>
+                        <input type="text" id="indName" required placeholder="Memahami arti perubahan..." class="w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-primary-600 focus:outline-none">
+                    </div>
+                </div>
+                <div>
+                    <label class="block font-bold uppercase text-slate-700 mb-1.5">Bukti Fisik Diharapkan (Pisahkan koma)</label>
+                    <textarea id="indExpected" rows="3" required placeholder="Dokumen program, Dokumen strategi..." class="w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-primary-600 focus:outline-none"></textarea>
+                </div>
+                <div class="flex justify-end gap-2 pt-3">
+                    <button type="button" onclick="closeModal('indikatorModal')" class="px-4 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl font-bold">Batal</button>
+                    <button type="submit" class="px-5 py-2.5 bg-primary-700 hover:bg-primary-800 text-white rounded-xl font-bold">Simpan Indikator</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- USER MODAL -->
+    <div id="userModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden border border-slate-200">
+            <div class="bg-primary-800 p-5 text-white flex items-center justify-between">
+                <h3 class="font-black text-sm tracking-wide">Tambah / Edit Pengguna Sistem</h3>
+                <button onclick="closeModal('userModal')" class="text-white hover:text-emerald-200"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <form id="userForm" onsubmit="saveUser(event)" class="p-6 space-y-4 text-xs">
+                <input type="hidden" id="userEditId">
+                <div>
+                    <label class="block font-bold uppercase text-slate-700 mb-1.5">Nama Lengkap</label>
+                    <input type="text" id="userFullName" required placeholder="Dr. H. Ahmad Fauzi" class="w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-primary-600 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block font-bold uppercase text-slate-700 mb-1.5">Username</label>
+                    <input type="text" id="userUsername" required placeholder="ahmadfauzi" class="w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-primary-600 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block font-bold uppercase text-slate-700 mb-1.5">Password</label>
+                    <input type="text" id="userPassword" required placeholder="password123" class="w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-primary-600 focus:outline-none">
+                </div>
+                <div>
+                    <label class="block font-bold uppercase text-slate-700 mb-1.5">Peran (Role)</label>
+                    <select id="userRole" required class="w-full px-4 py-2.5 border rounded-xl focus:ring-2 focus:ring-primary-600 focus:outline-none">
+                        <option value="Admin">Admin (Full Akses)</option>
+                        <option value="Guru">Guru / Tim PKKM</option>
+                    </select>
+                </div>
+                <div class="flex justify-end gap-2 pt-3">
+                    <button type="button" onclick="closeModal('userModal')" class="px-4 py-2.5 bg-slate-200 hover:bg-slate-300 text-slate-700 rounded-xl font-bold">Batal</button>
+                    <button type="submit" class="px-5 py-2.5 bg-primary-700 hover:bg-primary-800 text-white rounded-xl font-bold">Simpan Akun</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- BACKUP & RESTORE MODAL -->
+    <div id="backupModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-md overflow-hidden border border-slate-200">
+            <div class="bg-primary-800 p-5 text-white flex items-center justify-between">
+                <h3 class="font-black text-sm tracking-wide">Backup & Pemulihan Data (JSON)</h3>
+                <button onclick="closeModal('backupModal')" class="text-white hover:text-emerald-200"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <div class="p-6 space-y-5 text-xs">
+                <p class="text-slate-600 leading-relaxed">Cadangkan seluruh dokumen arsip, indikator kinerja, dan penilaian penilai ke file JSON atau pulihkan data kapan saja.</p>
+                <div>
+                    <button onclick="exportDataJSON()" class="w-full py-3 bg-primary-700 hover:bg-primary-800 text-white rounded-xl font-bold flex items-center justify-center gap-2 shadow transition">
+                        <i class="fa-solid fa-download text-sm"></i> Unduh File Backup Sistem (JSON)
+                    </button>
+                </div>
+                <div class="pt-4 border-t space-y-2">
+                    <label class="block font-bold uppercase text-slate-700">Pulihkan Data dari File Cadangan</label>
+                    <input type="file" id="importFile" accept=".json" onchange="importDataJSON(event)" class="w-full text-xs text-slate-500 file:mr-4 file:py-2.5 file:px-4 file:rounded-xl file:border-0 file:text-xs file:font-bold file:bg-slate-700 file:text-white hover:file:bg-slate-800 cursor-pointer">
+    <!-- SHARE LINK MODAL -->
+    <div id="shareLinkModal" class="fixed inset-0 z-50 hidden flex items-center justify-center bg-black/60 backdrop-blur-sm p-4">
+        <div class="bg-white rounded-3xl shadow-2xl w-full max-w-lg overflow-hidden border border-slate-200">
+            <div class="bg-primary-800 p-5 text-white flex items-center justify-between">
+                <h3 class="font-black text-sm tracking-wide flex items-center gap-2"><i class="fa-solid fa-share-nodes"></i> Bagikan Link Akses Arsip PKKM</h3>
+                <button onclick="closeModal('shareLinkModal')" class="text-white hover:text-emerald-200"><i class="fa-solid fa-xmark text-xl"></i></button>
+            </div>
+            <div class="p-6 space-y-4 text-xs text-slate-700 leading-relaxed">
+                <div class="p-4 bg-emerald-50 rounded-2xl border border-emerald-200 space-y-2">
+                    <p class="font-black text-primary-900 text-sm">Bagikan ke Tim Penilai / Guru Lain</p>
+                    <p>Semua dokumen, file bukti fisik, penilaian, dan indikator yang diunggah akan tersimpan otomatis dan langsung bisa diakses oleh siapa saja yang membuka link ini.</p>
+                </div>
+                <div>
+                    <label class="block font-bold uppercase text-slate-700 mb-1.5">Link Akses Aplikasi:</label>
+                    <div class="flex gap-2">
+                        <input type="text" id="shareUrlInput" readonly class="w-full px-3.5 py-2.5 bg-slate-100 border rounded-xl font-mono text-xs text-slate-700 select-all" value="">
+                        <button onclick="copyShareLink()" class="bg-primary-700 hover:bg-primary-800 text-white px-4 py-2.5 rounded-xl font-bold flex-shrink-0 transition flex items-center gap-1.5">
+                            <i class="fa-solid fa-copy"></i> Salin
+                        </button>
+                    </div>
+                </div>
+                <div class="p-4 bg-amber-50 rounded-2xl border border-amber-200 text-amber-900 space-y-1">
+                    <p class="font-bold"><i class="fa-solid fa-circle-info"></i> Tips Sinkronisasi Antar Perangkat:</p>
+                    <p class="text-[11px]">Agar data file tetap tersinkron dan tidak hilang saat dibagikan ke perangkat berbeda, gunakan menu <strong>Backup / Restore (JSON)</strong> di pojok kanan atas untuk memindahkan file backup instan ke rekan tim Anda.</p>
+                </div>
+            </div>
+            <div class="bg-slate-50 px-6 py-4 border-t flex justify-end">
+                <button onclick="closeModal('shareLinkModal')" class="px-5 py-2.5 bg-primary-700 hover:bg-primary-800 text-white rounded-xl font-bold">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- TOAST NOTIFICATION CONTAINER -->
+    <div id="toastContainer" class="fixed bottom-6 right-6 z-50 flex flex-col gap-2.5 pointer-events-none"></div>
+
+    <!-- SCRIPT LOGIC -->
+    <script>
+        // --- INDEXEDDB STORAGE SETUP FOR PERSISTENT FILES ---
+        let db;
+        const DB_NAME = "ArsipPKKM_CloudDB_v2";
+        const STORE_NAME = "files_store";
+
+        function initIndexedDB() {
+            return new Promise((resolve, reject) => {
+                const request = indexedDB.open(DB_NAME, 1);
+                request.onerror = () => reject(request.error);
+                request.onsuccess = () => {
+                    db = request.result;
+                    resolve(db);
+                };
+                request.onupgradeneeded = (e) => {
+                    const database = e.target.result;
+                    if (!database.objectStoreNames.contains(STORE_NAME)) {
+                        database.createObjectStore(STORE_NAME);
+                    }
+                };
+            });
+        }
+
+        function saveFileToIDB(id, blobData) {
+            return new Promise((resolve, reject) => {
+                if (!db) return resolve();
+                const transaction = db.transaction([STORE_NAME], "readwrite");
+                const store = transaction.objectStore(STORE_NAME);
+                const request = store.put(blobData, id);
+                request.onsuccess = () => resolve();
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        function getFileFromIDB(id) {
+            return new Promise((resolve, reject) => {
+                if (!db) return resolve(null);
+                const transaction = db.transaction([STORE_NAME], "readonly");
+                const store = transaction.objectStore(STORE_NAME);
+                const request = store.get(id);
+                request.onsuccess = () => resolve(request.result);
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        function deleteFileFromIDB(id) {
+            return new Promise((resolve, reject) => {
+                if (!db) return resolve();
+                const transaction = db.transaction([STORE_NAME], "readwrite");
+                const store = transaction.objectStore(STORE_NAME);
+                const request = store.delete(id);
+                request.onsuccess = () => resolve();
+                request.onerror = () => reject(request.error);
+            });
+        }
+
+        // --- DEFAULT DATA & INITIALIZATION ---
+        const DEFAULT_UNSUR = [
+            { id: 'u1', code: '3.1', title: 'Menciptakan inovasi yang bermanfaat dan tepat bagi pengembangan madrasah.' },
+            { id: 'u2', code: '3.2', title: 'Bekerja keras untuk mencapai keberhasilan madrasah sebagai organisasi pembelajaran yang efektif.' },
+            { id: 'u3', code: '3.3', title: 'Memiliki motivasi yang kuat untuk sukses dalam melaksanakan tugas pokok dan fungsinya.' },
+            { id: 'u4', code: '3.4', title: 'Pantang menyerah dan selalu mencari solusi terbaik dalam menghadapi kendala yang dihadapi.' },
+            { id: 'u5', code: '3.5', title: 'Memiliki naluri kewirausahaan dalam mengelola kegiatan produksi/jasa madrasah sebagai sumber belajar.' }
+        ];
+
+        const DEFAULT_INDIKATOR = [
+            { id: 'i1', unsurId: 'u1', no: '1', name: 'Memahami dan menghayati arti dan tujuan perubahan (inovasi) madrasah.', expected: 'Dokumen program pengembangan madrasah, Dokumen perubahan madrasah' },
+            { id: 'i2', unsurId: 'u1', no: '2', name: 'Menggunakan metode, teknik dan proses perubahan madrasah.', expected: 'Dokumen strategi perubahan madrasah, Dokumen inovasi dan kreativitas' },
+            { id: 'i3', unsurId: 'u1', no: '3', name: 'Menumbuhkan iklim yang mendorong kebebasan berpikir untuk menciptakan kreativitas dan inovasi.', expected: 'Dokumen iklim kerja kreatif, Panduan inovasi guru' },
+            { id: 'i4', unsurId: 'u1', no: '4', name: 'Mendorong warga madrasah untuk melakukan prakarsa/keberanian moral untuk melakukan hal-hal baru.', expected: 'Dokumen prakarsa baru warga madrasah, Penghargaan kreativitas' },
+            
+            { id: 'i5', unsurId: 'u2', no: '1', name: 'Mampu bertindak kreatif dan inovatif dalam melaksanakan pekerjaan melalui cara berpikir dan bertindak.', expected: 'Rencana Pelaksanaan Pembelajaran (RPP), Rencana Pengembangan Madrasah (RPM), Dokumen penanganan masalah, Foto aktivitas pembelajaran' },
+            { id: 'i6', unsurId: 'u2', no: '2', name: 'Mampu memberdayakan potensi madrasah secara optimal ke dalam berbagai kegiatan produktif.', expected: 'Rencana Pengembangan Madrasah (RPM), Dokumen penanganan masalah, Dokumen hasil kegiatan madrasah' },
+            { id: 'i7', unsurId: 'u2', no: '3', name: 'Mampu menumbuhkan jiwa kewirausahaan (kreatif, inovatif dan produktif) di kalangan warga.', expected: 'Data jenis usaha produktif, Program pengelolaan dan pendayagunaan hasil usaha' },
+            { id: 'i8', unsurId: 'u2', no: '4', name: 'Mampu mencatat ide-ide baru, kemudian mengembangkannya secara optimal.', expected: 'Rencana Pengembangan Madrasah, Dokumen rencana pengembangan ide baru' },
+
+            { id: 'i9', unsurId: 'u3', no: '1', name: 'Bersedia belajar dari orang lain secara proaktif.', expected: 'Forum komunikasi dengan lembaga pendidikan lain, Foto kegiatan' },
+            { id: 'i10', unsurId: 'u3', no: '2', name: 'Ingin selalu melakukan yang terbaik dalam setiap penugasan.', expected: 'Dokumen/foto pelaksanaan kegiatan, Sertifikat lomba pembelajaran, Prestasi guru dan tendik' },
+            { id: 'i11', unsurId: 'u3', no: '3', name: 'Menciptakan perubahan yang kuat di lingkungan madrasah.', expected: 'Program inovasi madrasah, Rencana Pengembangan Madrasah (RPM), Laporan target tercapai' },
+
+            { id: 'i12', unsurId: 'u4', no: '1', name: 'Mampu melibatkan tokoh agama, masyarakat, dan pemerintah dalam memecahkan masalah kelembagaan.', expected: 'MoU dengan pihak lain, Sister school, Dokumen kemitraan dengan sekolah lain' },
+            { id: 'i13', unsurId: 'u4', no: '2', name: 'Mampu bersikap objektif/tidak memihak dalam mengatasi konflik internal madrasah.', expected: 'Dokumen kegiatan penanganan konflik, Berita acara penyelesaian' },
+            { id: 'i14', unsurId: 'u4', no: '3', name: 'Mampu bersikap simpatik/tenggang rasa terhadap orang lain di dalam maupun luar madrasah.', expected: 'Dokumen kegiatan sosial, Foto kegiatan empati warga madrasah' },
+
+            { id: 'i15', unsurId: 'u5', no: '1', name: 'Mampu merencanakan kegiatan produksi/jasa sesuai dengan potensi madrasah.', expected: 'Laporan pelaksanaan dan hasil Program Pengembangan Unit Produksi Kewirausahaan' },
+            { id: 'i16', unsurId: 'u5', no: '2', name: 'Mampu membina kegiatan produksi/jasa sesuai dengan prinsip-prinsip pengelolaan profesional dan akuntabel.', expected: 'Laporan pembinaan kegiatan produksi/jasa sesuai prinsip profesional' },
+            { id: 'i17', unsurId: 'u5', no: '3', name: 'Mampu melaksanakan pengawasan kegiatan produksi/jasa dan menyusun laporan evaluasi.', expected: 'Laporan hasil evaluasi Program Pengembangan Kewirausahaan, Program Pengembangan Jiwa' },
+            { id: 'i18', unsurId: 'u5', no: '4', name: 'Mampu mengembangkan kegiatan produksi/jasa dan pemasarannya secara luas.', expected: 'Laporan pemasaran produk madrasah, Dokumen pengembangan unit usaha' }
+        ];
+
+        const DEFAULT_JENIS_BUKTI = [
+            "Dokumen Program Kerja",
+            "Rencana Pengembangan Madrasah (RPM)",
+            "Rencana Pelaksanaan Pembelajaran (RPP)",
+            "Dokumen Inovasi & Kreativitas",
+            "Laporan Pelaksanaan Kegiatan",
+            "Foto Aktivitas / Dokumentasi",
+            "MoU / Kerjasama Kemitraan",
+            "Sertifikat / Penghargaan",
+            "Laporan Evaluasi & Keuangan",
+            "Surat Keputusan (SK)"
+        ];
+
+        const DEFAULT_USERS = [
+            { id: 'usr1', fullname: 'Administrator Sistem', username: 'admin', password: 'admin123', role: 'Admin' },
+            { id: 'usr2', fullname: 'H. Ahmad Fauzi, S.Ag', username: 'guru', password: 'guru123', role: 'Guru' }
+        ];
+
+        // --- STATE STORAGE ---
+        let appState = {
+            currentUser: JSON.parse(localStorage.getItem('pkkm_current_user')) || null,
+            unsur: JSON.parse(localStorage.getItem('pkkm_unsur')) || DEFAULT_UNSUR,
+            indikator: JSON.parse(localStorage.getItem('pkkm_indikator')) || DEFAULT_INDIKATOR,
+            jenisBukti: JSON.parse(localStorage.getItem('pkkm_jenis')) || DEFAULT_JENIS_BUKTI,
+            documents: JSON.parse(localStorage.getItem('pkkm_docs')) || [],
+            assessments: JSON.parse(localStorage.getItem('pkkm_assessments')) || {},
+            users: JSON.parse(localStorage.getItem('pkkm_users')) || DEFAULT_USERS
+        };
+
+        function saveState() {
+            localStorage.setItem('pkkm_unsur', JSON.stringify(appState.unsur));
+            localStorage.setItem('pkkm_indikator', JSON.stringify(appState.indikator));
+            localStorage.setItem('pkkm_jenis', JSON.stringify(appState.jenisBukti));
+            localStorage.setItem('pkkm_docs', JSON.stringify(appState.documents));
+            localStorage.setItem('pkkm_assessments', JSON.stringify(appState.assessments));
+            localStorage.setItem('pkkm_users', JSON.stringify(appState.users));
+            if (appState.currentUser) {
+                localStorage.setItem('pkkm_current_user', JSON.stringify(appState.currentUser));
+            } else {
+                localStorage.removeItem('pkkm_current_user');
+            }
+        }
+
+        // Initialize IndexedDB on load and check existing login session
+        window.addEventListener('DOMContentLoaded', async () => {
+            try {
+                await initIndexedDB();
+            } catch(err) {
+                console.error("IndexedDB init error:", err);
+            }
+
+            // Restore login session if previously logged in
+            if (appState.currentUser) {
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('appLayout').classList.remove('hidden');
+
+                document.getElementById('userNameDisplay').innerText = appState.currentUser.fullname;
+                document.getElementById('userRoleDisplay').innerText = appState.currentUser.role;
+
+                if (appState.currentUser.role !== 'Admin') {
+                    document.getElementById('menuUsers').style.display = 'none';
+                    document.getElementById('menuSettings').style.display = 'none';
+                } else {
+                    document.getElementById('menuUsers').style.display = 'flex';
+                    document.getElementById('menuSettings').style.display = 'flex';
+                }
+
+                initApp();
+            }
+        });
+
+        // --- AUTH ---
+        document.getElementById('loginForm').addEventListener('submit', function(e) {
+            e.preventDefault();
+            const u = document.getElementById('loginUser').value.trim();
+            const p = document.getElementById('loginPass').value.trim();
+
+            const found = appState.users.find(x => x.username === u && x.password === p);
+            if (found) {
+                appState.currentUser = found;
+                saveState();
+                
+                document.getElementById('loginScreen').classList.add('hidden');
+                document.getElementById('appLayout').classList.remove('hidden');
+
+                document.getElementById('userNameDisplay').innerText = found.fullname;
+                document.getElementById('userRoleDisplay').innerText = found.role;
+
+                if (found.role !== 'Admin') {
+                    document.getElementById('menuUsers').style.display = 'none';
+                    document.getElementById('menuSettings').style.display = 'none';
+                } else {
+                    document.getElementById('menuUsers').style.display = 'flex';
+                    document.getElementById('menuSettings').style.display = 'flex';
+                }
+
+                initApp();
+                showToast('Selamat datang, ' + found.fullname, 'success');
+            } else {
+                showToast('Username atau password salah!', 'error');
+            }
+        });
+
+        function logout() {
+            appState.currentUser = null;
+            localStorage.removeItem('pkkm_current_user');
+            document.getElementById('appLayout').classList.add('hidden');
+            document.getElementById('loginScreen').classList.remove('hidden');
+            document.getElementById('loginForm').reset();
+            showToast('Anda telah keluar dari aplikasi.', 'info');
+        }
+
+        // --- TABS & NAVIGATION ---
+        function switchTab(tabId) {
+            document.querySelectorAll('.tab-content').forEach(el => el.classList.add('hidden'));
+            document.getElementById('tab-' + tabId).classList.remove('hidden');
+
+            document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('bg-primary-700', 'font-bold', 'shadow-md'));
+            const activeNav = document.querySelector(`[onclick="switchTab('${tabId}')"]`);
+            if (activeNav) activeNav.classList.add('bg-primary-700', 'font-bold', 'shadow-md');
+
+            const titles = {
+                'dashboard': ['Dashboard Utama', 'Ringkasan arsip dokumen dan kelengkapan bukti fisik PKKM'],
+                'unsur': ['Data Unsur PKKM', 'Daftar unsur tugas utama Penilaian Kinerja Kepala Madrasah'],
+                'indikator': ['Indikator Kinerja', 'Kelola indikator kinerja dan target bukti fisik'],
+                'upload': ['Upload Bukti Fisik', 'Form unggah dokumen bukti fisik PKKM multi-file'],
+                'arsip': ['Arsip Dokumen', 'Pusat daftar seluruh dokumen bukti fisik terunggah'],
+                'penilaian': ['Penilaian Kinerja', 'Berikan nilai 1-4 dan catatan penilai resmi'],
+                'rekap': ['Rekapitulasi PKKM', 'Analisis statistik pencapaian dokumen dan penilaian'],
+                'laporan': ['Laporan Resmi PKKM', 'Cetak atau ekspor laporan resmi administrasi PKKM'],
+                'users': ['Manajemen Pengguna', 'Kelola akun pengguna dan hak akses sistem'],
+                'pengaturan': ['Pengaturan Master', 'Pengaturan jenis bukti fisik dan reset data']
+            };
+
+            if (titles[tabId]) {
+                document.getElementById('pageTitle').innerText = titles[tabId][0];
+                document.getElementById('pageSubtitle').innerText = titles[tabId][1];
+            }
+
+            if (tabId === 'dashboard') renderDashboard();
+            if (tabId === 'unsur') renderUnsurList();
+            if (tabId === 'indikator') renderIndikatorTable();
+            if (tabId === 'upload') initUploadFormDropdowns();
+            if (tabId === 'arsip') renderArsipTable();
+            if (tabId === 'penilaian') renderPenilaianTable();
+            if (tabId === 'rekap') renderRekap();
+            if (tabId === 'laporan') renderReport();
+            if (tabId === 'users') renderUserTable();
+            if (tabId === 'pengaturan') renderJenisBuktiSettings();
+
+            if (window.innerWidth < 768) {
+                document.getElementById('sidebar').classList.add('hidden');
+            }
+        }
+
+        function toggleSidebar() {
+            document.getElementById('sidebar').classList.toggle('hidden');
+        }
+
+        function toggleSidebarMobile() {
+            document.getElementById('sidebar').classList.add('hidden');
+        }
+
+        function initApp() {
+            renderDashboard();
+            initUploadFormDropdowns();
+        }
+
+        // --- DASHBOARD ---
+        function renderDashboard() {
+            const totalDocs = appState.documents.length;
+            const totalInd = appState.indikator.length;
+
+            const filledIndIds = new Set(appState.documents.map(d => d.indikatorId));
+            const completedIndCount = filledIndIds.size;
+            const incompleteIndCount = totalInd - completedIndCount;
+            const percent = totalInd > 0 ? Math.round((completedIndCount / totalInd) * 100) : 0;
+
+            document.getElementById('dashPercent').innerText = percent + '%';
+            document.getElementById('dashStatusText').innerText = `${completedIndCount} dari ${totalInd} Indikator Terisi`;
+            document.getElementById('statTotalDoc').innerText = totalDocs;
+            document.getElementById('statIndComplete').innerText = completedIndCount;
+            document.getElementById('statIndIncomplete').innerText = incompleteIndCount;
+            document.getElementById('statTotalInd').innerText = totalInd;
+            document.getElementById('summaryTotalIndCount').innerText = totalInd + ' Indikator';
+
+            let scoreSum = 0;
+            let scoreCount = 0;
+            Object.values(appState.assessments).forEach(a => {
+                if (a.score) { scoreSum += parseInt(a.score); scoreCount++; }
+            });
+            const avgScore = scoreCount > 0 ? (scoreSum / scoreCount).toFixed(1) : '0.0';
+            document.getElementById('summaryAvgScore').innerText = avgScore + ' / 4.0';
+
+            const container = document.getElementById('unsurProgressContainer');
+            container.innerHTML = '';
+
+            appState.unsur.forEach(u => {
+                const indsInUnsur = appState.indikator.filter(i => i.unsurId === u.id);
+                const totalInUnsur = indsInUnsur.length;
+                const filledInUnsur = indsInUnsur.filter(i => filledIndIds.has(i.id)).length;
+                const pUnsur = totalInUnsur > 0 ? Math.round((filledInUnsur / totalInUnsur) * 100) : 0;
+
+                const div = document.createElement('div');
+                div.className = 'space-y-1.5';
+                div.innerHTML = `
+                    <div class="flex justify-between text-xs font-bold text-slate-700">
+                        <span>Unsur ${u.code}: ${u.title.substring(0, 45)}...</span>
+                        <span class="text-primary-700">${filledInUnsur}/${totalInUnsur} (${pUnsur}%)</span>
+                    </div>
+                    <div class="w-full bg-slate-100 h-3 rounded-full overflow-hidden p-0.5 border border-slate-200">
+                        <div class="bg-gradient-to-r from-primary-600 to-emerald-500 h-full rounded-full transition-all duration-500" style="width: ${pUnsur}%"></div>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function runQuickSearch(keyword) {
+            const resContainer = document.getElementById('quickSearchResults');
+            resContainer.innerHTML = '';
+            if (!keyword.trim()) {
+                resContainer.innerHTML = '<p class="text-slate-400 text-center py-6">Ketik kata kunci untuk mulai mencari...</p>';
+                return;
+            }
+
+            const kw = keyword.toLowerCase();
+            const matched = appState.documents.filter(d => 
+                d.title.toLowerCase().includes(kw) || 
+                d.pic.toLowerCase().includes(kw) || 
+                d.jenis.toLowerCase().includes(kw) ||
+                d.desc.toLowerCase().includes(kw)
+            );
+
+            if (matched.length === 0) {
+                resContainer.innerHTML = '<p class="text-red-500 text-center py-4 font-medium">Tidak ditemukan dokumen yang cocok.</p>';
+                return;
+            }
+
+            matched.forEach(d => {
+                const item = document.createElement('div');
+                item.className = 'p-2.5 hover:bg-emerald-50 rounded-xl cursor-pointer transition flex items-center justify-between';
+                item.onclick = () => viewDocumentDetail(d.id);
+                item.innerHTML = `
+                    <div class="truncate pr-2">
+                        <div class="font-bold text-slate-800 truncate"><i class="fa-solid fa-file-lines text-primary-600 mr-1.5"></i> ${d.title}</div>
+                        <div class="text-[11px] text-slate-500 mt-0.5">PIC: ${d.pic} • <span class="text-primary-700 font-semibold">${d.jenis}</span></div>
+                    </div>
+                    <i class="fa-solid fa-chevron-right text-slate-400 text-xs"></i>
+                `;
+                resContainer.appendChild(item);
+            });
+        }
+
+        // --- UNSUR MANAGEMENT ---
+        function renderUnsurList() {
+            const list = document.getElementById('unsurCardList');
+            list.innerHTML = '';
+
+            appState.unsur.forEach(u => {
+                const inds = appState.indikator.filter(i => i.unsurId === u.id);
+                const card = document.createElement('div');
+                card.className = 'bg-white p-7 rounded-3xl shadow-sm border border-slate-200/80 flex flex-col justify-between hover:shadow-md transition';
+                card.innerHTML = `
+                    <div class="space-y-4">
+                        <div class="flex justify-between items-center">
+                            <span class="bg-primary-100 text-primary-800 text-xs font-black px-3.5 py-1.5 rounded-full">Unsur ${u.code}</span>
+                            ${appState.currentUser?.role === 'Admin' ? `
+                                <div class="flex gap-2">
+                                    <button onclick="editUnsur('${u.id}')" class="text-blue-600 hover:text-blue-800 p-1.5 rounded-lg hover:bg-blue-50 transition" title="Edit Unsur"><i class="fa-solid fa-pen-to-square"></i></button>
+                                    <button onclick="deleteUnsur('${u.id}')" class="text-red-600 hover:text-red-800 p-1.5 rounded-lg hover:bg-red-50 transition" title="Hapus Unsur"><i class="fa-solid fa-trash"></i></button>
+                                </div>
+                            ` : ''}
+                        </div>
+                        <h3 class="font-bold text-slate-800 text-sm leading-relaxed">${u.title}</h3>
+                        <p class="text-xs text-slate-500 font-medium"><i class="fa-solid fa-list-check mr-1.5 text-primary-600"></i> ${inds.length} Indikator Kinerja terdaftar</p>
+                    </div>
+                    <div class="mt-6 pt-4 border-t border-slate-100 flex justify-between items-center text-xs">
+                        <span class="text-emerald-700 font-bold">Status: Aktif</span>
+                        <button onclick="switchTab('indikator')" class="text-primary-700 font-black hover:underline flex items-center gap-1">Kelola Indikator <i class="fa-solid fa-arrow-right text-[10px]"></i></button>
+                    </div>
+                `;
+                list.appendChild(card);
+            });
+        }
+
+        function openUnsurModal(id = null) {
+            document.getElementById('unsurForm').reset();
+            document.getElementById('unsurEditId').value = '';
+            document.getElementById('unsurModalTitle').innerText = 'Tambah Unsur Tugas Utama';
+            if (id) {
+                const u = appState.unsur.find(x => x.id === id);
+                if (u) {
+                    document.getElementById('unsurEditId').value = u.id;
+                    document.getElementById('unsurCode').value = u.code;
+                    document.getElementById('unsurTitle').value = u.title;
+                    document.getElementById('unsurModalTitle').innerText = 'Edit Unsur Tugas Utama';
+                }
+            }
+            document.getElementById('unsurModal').classList.remove('hidden');
+        }
+
+        function editUnsur(id) { openUnsurModal(id); }
+
+        function saveUnsur(e) {
+            e.preventDefault();
+            const id = document.getElementById('unsurEditId').value;
+            const code = document.getElementById('unsurCode').value.trim();
+            const title = document.getElementById('unsurTitle').value.trim();
+
+            if (id) {
+                const u = appState.unsur.find(x => x.id === id);
+                if (u) { u.code = code; u.title = title; }
+                showToast('Unsur berhasil diperbarui.', 'success');
+            } else {
+                const newId = 'u_' + Date.now();
+                appState.unsur.push({ id: newId, code, title });
+                showToast('Unsur baru berhasil ditambahkan.', 'success');
+            }
+
+            saveState();
+            closeModal('unsurModal');
+            renderUnsurList();
+        }
+
+        function deleteUnsur(id) {
+            if (confirm('Hapus unsur ini beserta seluruh indikator di dalamnya?')) {
+                appState.unsur = appState.unsur.filter(x => x.id !== id);
+                appState.indikator = appState.indikator.filter(x => x.unsurId !== id);
+                saveState();
+                renderUnsurList();
+                showToast('Unsur berhasil dihapus.', 'info');
+            }
+        }
+
+        // --- INDIKATOR MANAGEMENT ---
+        function renderIndikatorTable() {
+            const selectFilter = document.getElementById('filterUnsurIndikator');
+            const currentFilter = selectFilter.value;
+
+            selectFilter.innerHTML = '<option value="">Semua Unsur Tugas Utama</option>';
+            appState.unsur.forEach(u => {
+                selectFilter.innerHTML += `<option value="${u.id}" ${currentFilter === u.id ? 'selected' : ''}>Unsur ${u.code}</option>`;
+            });
+
+            const tbody = document.getElementById('indikatorTableBody');
+            tbody.innerHTML = '';
+
+            const filteredInd = currentFilter ? appState.indikator.filter(i => i.unsurId === currentFilter) : appState.indikator;
+
+            if (filteredInd.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="5" class="p-8 text-center text-slate-400 font-medium">Belum ada indikator kinerja terdaftar.</td></tr>`;
+                return;
+            }
+
+            filteredInd.forEach(ind => {
+                const unsur = appState.unsur.find(u => u.id === ind.unsurId);
+                const docsCount = appState.documents.filter(d => d.indikatorId === ind.id).length;
+
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-emerald-50/40 transition';
+                tr.innerHTML = `
+                    <td class="p-4 font-bold text-primary-900">Unsur ${unsur ? unsur.code : '-'} <br><span class="text-[11px] text-slate-400 font-semibold">Indikator #${ind.no}</span></td>
+                    <td class="p-4 font-semibold text-slate-800 leading-snug">${ind.name}</td>
+                    <td class="p-4 text-slate-600"><span class="bg-slate-100 px-3 py-1.5 rounded-xl text-[11px] font-medium inline-block leading-relaxed">${ind.expected}</span></td>
+                    <td class="p-4 text-center">
+                        <span class="px-3 py-1 rounded-full text-[11px] font-bold ${docsCount > 0 ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
+                            ${docsCount > 0 ? docsCount + ' Berkas Dokumen' : 'Belum Ada Berkas'}
+                        </span>
+                    </td>
+                    <td class="p-4 text-center space-x-1">
+                        <button onclick="openUploadForIndikator('${ind.id}')" title="Upload Bukti" class="text-primary-700 hover:text-primary-900 p-1.5 rounded-lg hover:bg-emerald-50 transition"><i class="fa-solid fa-cloud-arrow-up"></i></button>
+                        ${appState.currentUser?.role === 'Admin' ? `
+                            <button onclick="editIndikator('${ind.id}')" title="Edit" class="text-blue-600 hover:text-blue-800 p-1.5 rounded-lg hover:bg-blue-50 transition"><i class="fa-solid fa-pen-to-square"></i></button>
+                            <button onclick="deleteIndikator('${ind.id}')" title="Hapus" class="text-red-600 hover:text-red-800 p-1.5 rounded-lg hover:bg-red-50 transition"><i class="fa-solid fa-trash"></i></button>
+                        ` : ''}
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function openIndikatorModal(id = null) {
+            document.getElementById('indikatorForm').reset();
+            document.getElementById('indEditId').value = '';
+            document.getElementById('indikatorModalTitle').innerText = 'Tambah Indikator Kinerja';
+
+            const sel = document.getElementById('indUnsurSelect');
+            sel.innerHTML = '<option value="">-- Pilih Unsur --</option>';
+            appState.unsur.forEach(u => {
+                sel.innerHTML += `<option value="${u.id}">Unsur ${u.code}: ${u.title.substring(0, 40)}...</option>`;
+            });
+
+            if (id) {
+                const ind = appState.indikator.find(x => x.id === id);
+                if (ind) {
+                    document.getElementById('indEditId').value = ind.id;
+                    document.getElementById('indUnsurSelect').value = ind.unsurId;
+                    document.getElementById('indNo').value = ind.no;
+                    document.getElementById('indName').value = ind.name;
+                    document.getElementById('indExpected').value = ind.expected;
+                    document.getElementById('indikatorModalTitle').innerText = 'Edit Indikator Kinerja';
+                }
+            }
+            document.getElementById('indikatorModal').classList.remove('hidden');
+        }
+
+        function editIndikator(id) { openIndikatorModal(id); }
+
+        function saveIndikator(e) {
+            e.preventDefault();
+            const id = document.getElementById('indEditId').value;
+            const unsurId = document.getElementById('indUnsurSelect').value;
+            const no = document.getElementById('indNo').value.trim();
+            const name = document.getElementById('indName').value.trim();
+            const expected = document.getElementById('indExpected').value.trim();
+
+            if (id) {
+                const ind = appState.indikator.find(x => x.id === id);
+                if (ind) { ind.unsurId = unsurId; ind.no = no; ind.name = name; ind.expected = expected; }
+                showToast('Indikator berhasil diperbarui.', 'success');
+            } else {
+                const newId = 'ind_' + Date.now();
+                appState.indikator.push({ id: newId, unsurId, no, name, expected });
+                showToast('Indikator baru berhasil ditambahkan.', 'success');
+            }
+
+            saveState();
+            closeModal('indikatorModal');
+            renderIndikatorTable();
+        }
+
+        function deleteIndikator(id) {
+            if (confirm('Hapus indikator kinerja ini?')) {
+                appState.indikator = appState.indikator.filter(x => x.id !== id);
+                appState.documents = appState.documents.filter(x => x.indikatorId !== id);
+                saveState();
+                renderIndikatorTable();
+                showToast('Indikator berhasil dihapus.', 'info');
+            }
+        }
+
+        function openUploadForIndikator(indId) {
+            switchTab('upload');
+            const ind = appState.indikator.find(x => x.id === indId);
+            if (ind) {
+                document.getElementById('upUnsur').value = ind.unsurId;
+                populateIndikatorDropdown(ind.unsurId, indId);
+            }
+        }
+
+        // --- UPLOAD FORM ---
+        function initUploadFormDropdowns() {
+            const upUnsur = document.getElementById('upUnsur');
+            upUnsur.innerHTML = '<option value="">-- Pilih Unsur Tugas Utama --</option>';
+            appState.unsur.forEach(u => {
+                upUnsur.innerHTML += `<option value="${u.id}">Unsur ${u.code}: ${u.title.substring(0, 45)}...</option>`;
+            });
+
+            const upJenis = document.getElementById('upJenis');
+            upJenis.innerHTML = '<option value="">-- Pilih Jenis Bukti --</option>';
+            appState.jenisBukti.forEach(j => {
+                upJenis.innerHTML += `<option value="${j}">${j}</option>`;
+            });
+
+            document.getElementById('upDate').value = new Date().toISOString().split('T')[0];
+        }
+
+        function populateIndikatorDropdown(unsurId, selectedIndId = null) {
+            const upIndikator = document.getElementById('upIndikator');
+            upIndikator.innerHTML = '<option value="">-- Pilih Indikator Kinerja --</option>';
+            if (!unsurId) return;
+
+            const inds = appState.indikator.filter(i => i.unsurId === unsurId);
+            inds.forEach(i => {
+                upIndikator.innerHTML += `<option value="${i.id}" ${selectedIndId === i.id ? 'selected' : ''}>Indikator #${i.no}: ${i.name}</option>`;
+            });
+        }
+
+        function updateDefaultBuktiList(indId) {
+            if (!indId) return;
+            const ind = appState.indikator.find(i => i.id === indId);
+            if (ind && ind.expected) {
+                const titleField = document.getElementById('upTitle');
+                if (!titleField.value) {
+                    titleField.value = ind.expected.split(',')[0].trim();
+                }
+            }
+        }
+
+        async function handleUploadSubmit(e) {
+            e.preventDefault();
+            const unsurId = document.getElementById('upUnsur').value;
+            const indikatorId = document.getElementById('upIndikator').value;
+            const title = document.getElementById('upTitle').value.trim();
+            const jenis = document.getElementById('upJenis').value;
+            const date = document.getElementById('upDate').value;
+            const year = document.getElementById('upYear').value;
+            const pic = document.getElementById('upPic').value.trim();
+            const desc = document.getElementById('upDesc').value.trim();
+
+            const fileInput = document.getElementById('upFile');
+            const file = fileInput.files[0];
+
+            if (!file) {
+                showToast('Pilih file dokumen terlebih dahulu!', 'error');
+                return;
+            }
+
+            const docId = 'doc_' + Date.now();
+            const fileName = file.name;
+            const fileSize = (file.size / 1024).toFixed(1) + ' KB';
+
+            // Save actual file blob into IndexedDB
+            try {
+                await saveFileToIDB(docId, file);
+            } catch(err) {
+                console.error("Gagal menyimpan file ke database:", err);
+                showToast('Gagal menyimpan file ke penyimpanan lokal!', 'error');
+                return;
+            }
+
+            const newDoc = {
+                id: docId,
+                unsurId,
+                indikatorId,
+                title,
+                jenis,
+                date,
+                year,
+                pic,
+                desc,
+                fileName,
+                fileSize,
+                uploadedAt: new Date().toLocaleDateString('id-ID'),
+                uploader: appState.currentUser?.fullname || 'Admin'
+            };
+
+            appState.documents.push(newDoc);
+            saveState();
+
+            showToast('Dokumen bukti fisik & file berhasil disimpan secara permanen!', 'success');
+            document.getElementById('uploadForm').reset();
+            initUploadFormDropdowns();
+            switchTab('arsip');
+        }
+
+        // --- ARSID DOKUMEN ---
+        function renderArsipTable() {
+            const search = document.getElementById('archiveSearch').value.toLowerCase();
+            const filterUnsur = document.getElementById('archiveFilterUnsur').value;
+
+            const sel = document.getElementById('archiveFilterUnsur');
+            sel.innerHTML = '<option value="">Semua Unsur</option>';
+            appState.unsur.forEach(u => {
+                sel.innerHTML += `<option value="${u.id}" ${filterUnsur === u.id ? 'selected' : ''}>Unsur ${u.code}</option>`;
+            });
+
+            const tbody = document.getElementById('archiveTableBody');
+            tbody.innerHTML = '';
+
+            let filtered = appState.documents;
+            if (filterUnsur) {
+                filtered = filtered.filter(d => d.unsurId === filterUnsur);
+            }
+            if (search) {
+                filtered = filtered.filter(d => 
+                    d.title.toLowerCase().includes(search) || 
+                    d.pic.toLowerCase().includes(search) || 
+                    d.jenis.toLowerCase().includes(search) ||
+                    d.fileName.toLowerCase().includes(search)
+                );
+            }
+
+            if (filtered.length === 0) {
+                tbody.innerHTML = `<tr><td colspan="6" class="p-8 text-center text-slate-400 font-medium">Tidak ada arsip dokumen yang ditemukan.</td></tr>`;
+                return;
+            }
+
+            filtered.forEach(d => {
+                const unsur = appState.unsur.find(u => u.id === d.unsurId);
+                const ind = appState.indikator.find(i => i.id === d.indikatorId);
+
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-emerald-50/40 transition';
+                tr.innerHTML = `
+                    <td class="p-4">
+                        <div class="font-bold text-slate-800">${d.title}</div>
+                        <div class="text-[11px] text-slate-500 mt-0.5 truncate max-w-xs font-medium">${d.desc || 'Tanpa keterangan'}</div>
+                    </td>
+                    <td class="p-4">
+                        <span class="bg-primary-100 text-primary-800 font-bold px-2.5 py-1 rounded-lg text-[11px]">Unsur ${unsur ? unsur.code : '-'}</span>
+                        <div class="text-[11px] text-slate-600 font-medium mt-1">Indikator #${ind ? ind.no : '-'}</div>
+                    </td>
+                    <td class="p-4">
+                        <span class="font-semibold text-slate-800">${d.jenis}</span>
+                        <div class="text-[10px] text-primary-700 font-mono font-bold mt-0.5"><i class="fa-solid fa-file mr-1"></i> ${d.fileName} (${d.fileSize})</div>
+                    </td>
+                    <td class="p-4 font-semibold text-slate-700">${d.pic}</td>
+                    <td class="p-4 text-slate-600 font-medium">${d.date} <br><span class="text-[10px] text-slate-400">Thn: ${d.year}</span></td>
+                    <td class="p-4 text-center space-x-1">
+                        <button onclick="viewDocumentDetail('${d.id}')" title="Preview / Detail" class="text-blue-600 hover:text-blue-800 p-1.5 rounded-lg hover:bg-blue-50 transition"><i class="fa-solid fa-eye"></i></button>
+                        <button onclick="downloadDocument('${d.id}')" title="Unduh File" class="text-emerald-600 hover:text-emerald-800 p-1.5 rounded-lg hover:bg-emerald-50 transition"><i class="fa-solid fa-download"></i></button>
+                        <button onclick="deleteDocument('${d.id}')" title="Hapus Dokumen" class="text-red-600 hover:text-red-800 p-1.5 rounded-lg hover:bg-red-50 transition"><i class="fa-solid fa-trash"></i></button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        async function viewDocumentDetail(docId) {
+            const d = appState.documents.find(x => x.id === docId);
+            if (!d) return;
+
+            const unsur = appState.unsur.find(u => u.id === d.unsurId);
+            const ind = appState.indikator.find(i => i.id === d.indikatorId);
+
+            document.getElementById('previewModalTitle').innerText = 'Detail Dokumen: ' + d.title;
+            const body = document.getElementById('previewModalBody');
+            
+            // Retrieve file blob from IDB
+            let fileBlob = await getFileFromIDB(d.id);
+            let previewHTML = '';
+
+            if (fileBlob) {
+                const fileType = fileBlob.type;
+                const fileURL = URL.createObjectURL(fileBlob);
+
+                if (fileType.includes('image')) {
+                    previewHTML = `<div class="mt-3 text-center"><img src="${fileURL}" class="max-h-64 mx-auto rounded-xl border shadow" alt="Preview Gambar"></div>`;
+                } else if (fileType.includes('pdf')) {
+                    previewHTML = `<div class="mt-3 text-center"><iframe src="${fileURL}" class="w-full h-64 rounded-xl border"></iframe></div>`;
+                } else {
+                    previewHTML = `<div class="mt-3 p-3 bg-amber-50 text-amber-800 rounded-xl font-medium">Format berkas ini dapat diunduh langsung untuk dibuka di aplikasi terkait (Word/Excel/PPT).</div>`;
+                }
+            } else {
+                previewHTML = `<div class="mt-3 p-3 bg-slate-100 text-slate-500 rounded-xl">Berkas file biner tidak ditemukan dalam cache penyimpanan lokal.</div>`;
+            }
+
+            body.innerHTML = `
+                <div class="space-y-4">
+                    <div class="bg-emerald-50/70 p-4 rounded-2xl border border-emerald-200">
+                        <p class="text-[11px] font-bold text-primary-900 uppercase tracking-wider">Unsur & Indikator Kinerja PKKM</p>
+                        <p class="font-black text-slate-800 mt-1">Unsur ${unsur ? unsur.code : '-'} - Indikator #${ind ? ind.no : '-'}: ${ind ? ind.name : '-'}</p>
+                    </div>
+                    <div class="grid grid-cols-2 gap-4 text-slate-700 font-medium">
+                        <div><strong>Jenis Bukti:</strong> ${d.jenis}</div>
+                        <div><strong>Tahun Pelaksanaan:</strong> ${d.year}</div>
+                        <div><strong>Tanggal Dokumen:</strong> ${d.date}</div>
+                        <div><strong>Penanggung Jawab (PIC):</strong> ${d.pic}</div>
+                        <div><strong>Nama Berkas File:</strong> <span class="font-mono text-primary-700 font-bold">${d.fileName}</span> (${d.fileSize})</div>
+                        <div><strong>Diunggah Oleh:</strong> ${d.uploader} (${d.uploadedAt})</div>
+                    </div>
+                    <div>
+                        <strong class="text-slate-700">Keterangan / Deskripsi:</strong>
+                        <p class="bg-slate-50 p-3.5 rounded-xl border border-slate-200 mt-1.5 text-slate-600 leading-relaxed">${d.desc || 'Tidak ada keterangan tambahan.'}</p>
+                    </div>
+                    ${previewHTML}
+                </div>
+            `;
+
+            // Bind download action
+            document.getElementById('modalDownloadBtn').onclick = () => downloadDocument(d.id);
+
+            document.getElementById('previewModal').classList.remove('hidden');
+        }
+
+        async function downloadDocument(docId) {
+            const d = appState.documents.find(x => x.id === docId);
+            if (!d) return;
+
+            const fileBlob = await getFileFromIDB(d.id);
+            if (fileBlob) {
+                const url = URL.createObjectURL(fileBlob);
+                const a = document.createElement('a');
+                a.href = url;
+                a.download = d.fileName;
+                document.body.appendChild(a);
+                a.click();
+                a.remove();
+                URL.revokeObjectURL(url);
+                showToast(`Mengunduh file: ${d.fileName}`, 'success');
+            } else {
+                showToast('Berkas fisik tidak ditemukan di memori.', 'error');
+            }
+        }
+
+        async function deleteDocument(docId) {
+            if (confirm('Hapus dokumen bukti fisik ini dari arsip?')) {
+                appState.documents = appState.documents.filter(x => x.id !== docId);
+                await deleteFileFromIDB(docId);
+                saveState();
+                renderArsipTable();
+                showToast('Dokumen berhasil dihapus.', 'info');
+            }
+        }
+
+        // --- PENILAIAN ---
+        function renderPenilaianTable() {
+            const tbody = document.getElementById('penilaianTableBody');
+            tbody.innerHTML = '';
+
+            appState.indikator.forEach(ind => {
+                const unsur = appState.unsur.find(u => u.id === ind.unsurId);
+                const docsCount = appState.documents.filter(d => d.indikatorId === ind.id).length;
+                const assess = appState.assessments[ind.id] || { score: '', note: '' };
+
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-emerald-50/40 transition';
+                tr.innerHTML = `
+                    <td class="p-4">
+                        <span class="bg-primary-100 text-primary-800 font-bold px-2.5 py-1 rounded-lg text-[11px]">Unsur ${unsur ? unsur.code : '-'}</span>
+                        <div class="font-bold text-slate-800 mt-1 leading-snug">Indikator #${ind.no}: ${ind.name}</div>
+                    </td>
+                    <td class="p-4 text-center font-bold text-primary-700">${docsCount} Berkas</td>
+                    <td class="p-4 text-center">
+                        <select id="score_${ind.id}" class="px-3 py-2 text-xs font-bold border rounded-xl text-center focus:ring-2 focus:ring-primary-600 focus:outline-none">
+                            <option value="">- Pilih Nilai -</option>
+                            <option value="1" ${assess.score == '1' ? 'selected' : ''}>1 - Kurang</option>
+                            <option value="2" ${assess.score == '2' ? 'selected' : ''}>2 - Cukup</option>
+                            <option value="3" ${assess.score == '3' ? 'selected' : ''}>3 - Baik</option>
+                            <option value="4" ${assess.score == '4' ? 'selected' : ''}>4 - Sangat Baik</option>
+                        </select>
+                    </td>
+                    <td class="p-4">
+                        <input type="text" id="note_${ind.id}" value="${assess.note || ''}" placeholder="Tuliskan catatan atau alasan penilaian..." class="w-full px-3.5 py-2 text-xs border rounded-xl focus:ring-2 focus:ring-primary-600 focus:outline-none font-medium">
+                    </td>
+                    <td class="p-4 text-center">
+                        <button onclick="saveAssessment('${ind.id}')" class="bg-primary-700 hover:bg-primary-800 text-white px-4 py-2 rounded-xl text-xs font-bold shadow transition flex items-center gap-1.5 mx-auto">
+                            <i class="fa-solid fa-floppy-disk"></i> Simpan
+                        </button>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function saveAssessment(indId) {
+            const score = document.getElementById('score_' + indId).value;
+            const note = document.getElementById('note_' + indId).value.trim();
+
+            appState.assessments[indId] = { score, note };
+            saveState();
+            showToast('Penilaian kinerja berhasil disimpan.', 'success');
+        }
+
+        // --- REKAPITULASI ---
+        function renderRekap() {
+            const rekapUnsurList = document.getElementById('rekapUnsurList');
+            rekapUnsurList.innerHTML = '';
+
+            const filledIndIds = new Set(appState.documents.map(d => d.indikatorId));
+
+            appState.unsur.forEach(u => {
+                const inds = appState.indikator.filter(i => i.unsurId === u.id);
+                const filled = inds.filter(i => filledIndIds.has(i.id)).length;
+                rekapUnsurList.innerHTML += `
+                    <div class="flex justify-between items-center p-3.5 bg-slate-50 rounded-2xl border border-slate-200">
+                        <div>
+                            <span class="font-bold text-slate-800">Unsur ${u.code}</span>
+                            <p class="text-[11px] text-slate-500 truncate max-w-xs font-medium">${u.title}</p>
+                        </div>
+                        <div class="text-right">
+                            <span class="font-black text-primary-700">${filled} / ${inds.length} Indikator</span>
+                        </div>
+                    </div>
+                `;
+            });
+
+            const rekapNilaiList = document.getElementById('rekapNilaiList');
+            let counts = { 1: 0, 2: 0, 3: 0, 4: 0, unrated: 0 };
+
+            appState.indikator.forEach(ind => {
+                const a = appState.assessments[ind.id];
+                if (a && a.score) { counts[a.score]++; } else { counts.unrated++; }
+            });
+
+            rekapNilaiList.innerHTML = `
+                <div class="flex justify-between items-center p-3 bg-emerald-50 rounded-2xl border border-emerald-200 font-semibold">
+                    <span class="text-emerald-900">Nilai 4 (Sangat Baik):</span> <strong class="text-emerald-800 text-sm">${counts[4]} Indikator</strong>
+                </div>
+                <div class="flex justify-between items-center p-3 bg-blue-50 rounded-2xl border border-blue-200 font-semibold">
+                    <span class="text-blue-900">Nilai 3 (Baik):</span> <strong class="text-blue-800 text-sm">${counts[3]} Indikator</strong>
+                </div>
+                <div class="flex justify-between items-center p-3 bg-amber-50 rounded-2xl border border-amber-200 font-semibold">
+                    <span class="text-amber-900">Nilai 2 (Cukup):</span> <strong class="text-amber-800 text-sm">${counts[2]} Indikator</strong>
+                </div>
+                <div class="flex justify-between items-center p-3 bg-red-50 rounded-2xl border border-red-200 font-semibold">
+                    <span class="text-red-900">Nilai 1 (Kurang):</span> <strong class="text-red-800 text-sm">${counts[1]} Indikator</strong>
+                </div>
+                <div class="flex justify-between items-center p-3 bg-slate-100 rounded-2xl border border-slate-200 font-semibold">
+                    <span class="text-slate-700">Belum Dinilai:</span> <strong class="text-slate-600 text-sm">${counts.unrated} Indikator</strong>
+                </div>
+            `;
+        }
+
+        // --- LAPORAN ---
+        function renderReport() {
+            const totalDocs = appState.documents.length;
+            const totalInd = appState.indikator.length;
+            const filledIndIds = new Set(appState.documents.map(d => d.indikatorId));
+            const filledCount = filledIndIds.size;
+            const percent = totalInd > 0 ? Math.round((filledCount / totalInd) * 100) : 0;
+
+            document.getElementById('repTotalDoc').innerText = totalDocs;
+            document.getElementById('repIndFilled').innerText = `${filledCount} / ${totalInd}`;
+            document.getElementById('repPercent').innerText = percent + '%';
+
+            let scoreSum = 0;
+            let scoreCount = 0;
+            Object.values(appState.assessments).forEach(a => {
+                if (a.score) { scoreSum += parseInt(a.score); scoreCount++; }
+            });
+            document.getElementById('repAvgScore').innerText = scoreCount > 0 ? (scoreSum / scoreCount).toFixed(1) : '0.0';
+
+            const tbody = document.getElementById('reportTableBody');
+            tbody.innerHTML = '';
+
+            appState.indikator.forEach((ind, idx) => {
+                const unsur = appState.unsur.find(u => u.id === ind.unsurId);
+                const docs = appState.documents.filter(d => d.indikatorId === ind.id);
+                const assess = appState.assessments[ind.id] || { score: '-' };
+
+                const tr = document.createElement('tr');
+                tr.innerHTML = `
+                    <td class="p-3 font-bold">${idx + 1}</td>
+                    <td class="p-3">
+                        <strong>Unsur ${unsur ? unsur.code : '-'} - Indikator #${ind.no}</strong><br>
+                        <span class="text-slate-600 font-medium">${ind.name}</span>
+                    </td>
+                    <td class="p-3 text-center font-bold">${docs.length} Berkas</td>
+                    <td class="p-3 text-center font-black text-primary-700">${assess.score}</td>
+                    <td class="p-3 text-center">
+                        <span class="px-2.5 py-1 rounded-full text-[10px] font-bold ${docs.length > 0 ? 'bg-emerald-100 text-emerald-800' : 'bg-amber-100 text-amber-800'}">
+                            ${docs.length > 0 ? 'Lengkap' : 'Belum'}
+                        </span>
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        // --- USERS ---
+        function renderUserTable() {
+            const tbody = document.getElementById('userTableBody');
+            tbody.innerHTML = '';
+
+            appState.users.forEach(u => {
+                const tr = document.createElement('tr');
+                tr.className = 'hover:bg-emerald-50/40 transition';
+                tr.innerHTML = `
+                    <td class="p-4 font-bold text-slate-800">${u.fullname}</td>
+                    <td class="p-4 font-mono text-primary-700 font-semibold">${u.username}</td>
+                    <td class="p-4"><span class="px-2.5 py-1 rounded-full text-[11px] font-bold ${u.role === 'Admin' ? 'bg-purple-100 text-purple-800' : 'bg-blue-100 text-blue-800'}">${u.role}</span></td>
+                    <td class="p-4 text-emerald-600 font-bold">Aktif</td>
+                    <td class="p-4 text-center space-x-1">
+                        <button onclick="editUser('${u.id}')" class="text-blue-600 hover:text-blue-800 p-1.5 rounded-lg hover:bg-blue-50 transition" title="Edit Akun"><i class="fa-solid fa-pen-to-square"></i></button>
+                        ${u.username !== 'admin' ? `<button onclick="deleteUser('${u.id}')" class="text-red-600 hover:text-red-800 p-1.5 rounded-lg hover:bg-red-50 transition" title="Hapus Akun"><i class="fa-solid fa-trash"></i></button>` : ''}
+                    </td>
+                `;
+                tbody.appendChild(tr);
+            });
+        }
+
+        function openUserModal(id = null) {
+            document.getElementById('userForm').reset();
+            document.getElementById('userEditId').value = '';
+            if (id) {
+                const u = appState.users.find(x => x.id === id);
+                if (u) {
+                    document.getElementById('userEditId').value = u.id;
+                    document.getElementById('userFullName').value = u.fullname;
+                    document.getElementById('userUsername').value = u.username;
+                    document.getElementById('userPassword').value = u.password;
+                    document.getElementById('userRole').value = u.role;
+                }
+            }
+            document.getElementById('userModal').classList.remove('hidden');
+        }
+
+        function editUser(id) { openUserModal(id); }
+
+        function saveUser(e) {
+            e.preventDefault();
+            const id = document.getElementById('userEditId').value;
+            const fullname = document.getElementById('userFullName').value.trim();
+            const username = document.getElementById('userUsername').value.trim();
+            const password = document.getElementById('userPassword').value.trim();
+            const role = document.getElementById('userRole').value;
+
+            if (id) {
+                const u = appState.users.find(x => x.id === id);
+                if (u) { u.fullname = fullname; u.username = username; u.password = password; u.role = role; }
+                showToast('Pengguna berhasil diperbarui.', 'success');
+            } else {
+                const newId = 'usr_' + Date.now();
+                appState.users.push({ id: newId, fullname, username, password, role });
+                showToast('Pengguna baru berhasil ditambahkan.', 'success');
+            }
+
+            saveState();
+            closeModal('userModal');
+            renderUserTable();
+        }
+
+        function deleteUser(id) {
+            if (confirm('Hapus akun pengguna ini?')) {
+                appState.users = appState.users.filter(x => x.id !== id);
+                saveState();
+                renderUserTable();
+                showToast('Pengguna berhasil dihapus.', 'info');
+            }
+        }
+
+        // --- PENGATURAN MASTER ---
+        function renderJenisBuktiSettings() {
+            const container = document.getElementById('jenisBuktiListContainer');
+            container.innerHTML = '';
+
+            appState.jenisBukti.forEach((j, idx) => {
+                const badge = document.createElement('div');
+                badge.className = 'bg-white px-3.5 py-2 rounded-xl border border-slate-200 text-xs font-bold flex items-center gap-2.5 shadow-sm';
+                badge.innerHTML = `
+                    <span class="text-slate-700">${j}</span>
+                    <button onclick="removeJenisBukti(${idx})" class="text-red-500 hover:text-red-700 ml-1 p-0.5 rounded"><i class="fa-solid fa-xmark"></i></button>
+                `;
+                container.appendChild(badge);
+            });
+        }
+
+        function addNewJenisBukti() {
+            const input = document.getElementById('newJenisInput');
+            const val = input.value.trim();
+            if (!val) return;
+
+            appState.jenisBukti.push(val);
+            saveState();
+            input.value = '';
+            renderJenisBuktiSettings();
+            showToast('Jenis bukti fisik berhasil ditambahkan.', 'success');
+        }
+
+        function removeJenisBukti(idx) {
+            appState.jenisBukti.splice(idx, 1);
+            saveState();
+            renderJenisBuktiSettings();
+            showToast('Jenis bukti fisik dihapus.', 'info');
+        }
+
+        function resetFactoryData() {
+            if (confirm('PERINGATAN: Seluruh data arsip, indikator, dan pengaturan akan dikembalikan ke awal. Lanjutkan?')) {
+                localStorage.clear();
+                indexedDB.deleteDatabase(DB_NAME);
+                location.reload();
+            }
+        }
+
+        // --- BACKUP & RESTORE ---
+        function openBackupModal() {
+            document.getElementById('backupModal').classList.remove('hidden');
+        }
+
+        function openShareLinkModal() {
+            document.getElementById('shareUrlInput').value = window.location.href;
+            document.getElementById('shareLinkModal').classList.remove('hidden');
+        }
+
+        function copyShareLink() {
+            const input = document.getElementById('shareUrlInput');
+            input.select();
+            document.execCommand('copy');
+            showToast('Link berhasil disalin ke clipboard!', 'success');
+        }
+
+        function exportDataJSON() {
+            const dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(appState, null, 2));
+            const dlAnchor = document.createElement('a');
+            dlAnchor.setAttribute("href", dataStr);
+            dlAnchor.setAttribute("download", "backup_arsip_pkkm_mts_ar_rahman_" + new Date().toISOString().split('T')[0] + ".json");
+            document.body.appendChild(dlAnchor);
+            dlAnchor.click();
+            dlAnchor.remove();
+            showToast('File backup berhasil diunduh.', 'success');
+        }
+
+        function importDataJSON(e) {
+            const file = e.target.files[0];
+            if (!file) return;
+
+            const reader = new FileReader();
+            reader.onload = function(evt) {
+                try {
+                    const parsed = JSON.parse(evt.target.result);
+                    if (parsed.unsur && parsed.indikator && parsed.documents) {
+                        appState = parsed;
+                        saveState();
+                        showToast('Data berhasil dipulihkan dari file backup!', 'success');
+                        closeModal('backupModal');
+                        location.reload();
+                    } else {
+                        showToast('Format file JSON tidak valid.', 'error');
+                    }
+                } catch(err) {
+                    showToast('Gagal membaca file JSON.', 'error');
+                }
+            };
+            reader.readAsText(file);
+        }
+
+        // --- HELPERS ---
+        function closeModal(modalId) {
+            document.getElementById(modalId).classList.add('hidden');
+        }
+
+        function showToast(message, type = 'success') {
+            const container = document.getElementById('toastContainer');
+            const toast = document.createElement('div');
+            
+            let bgClass = 'bg-primary-800 text-white';
+            let icon = 'fa-circle-check';
+            if (type === 'error') { bgClass = 'bg-red-600 text-white'; icon = 'fa-triangle-exclamation'; }
+            if (type === 'info') { bgClass = 'bg-blue-600 text-white'; icon = 'fa-circle-info'; }
+
+            toast.className = `${bgClass} px-5 py-3.5 rounded-2xl shadow-xl flex items-center gap-3.5 text-xs font-bold pointer-events-auto transform translate-y-2 opacity-0 transition-all duration-300 border border-white/20`;
+            toast.innerHTML = `<i class="fa-solid ${icon} text-base"></i> <span>${message}</span>`;
+            
+            container.appendChild(toast);
+            setTimeout(() => { toast.classList.remove('translate-y-2', 'opacity-0'); }, 10);
+
+            setTimeout(() => {
+                toast.classList.add('translate-y-2', 'opacity-0');
+                setTimeout(() => toast.remove(), 300);
+            }, 3500);
+        }
+    </script>
+</body>
+</html>
